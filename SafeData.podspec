@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 In the judgement before using arrays and dictionaries, protect the data
 DESC
 
-  s.homepage     = "git@github.com:lishiping/SafeData.git"
+  s.homepage     = "https://github.com/lishiping/SafeData.git"
   s.license      = "MIT (example)"
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
@@ -18,7 +18,7 @@ DESC
 
   s.ios.deployment_target = "7.0"
 
-  s.source       = { :git => "git@github.com:lishiping/SafeData.git", :tag => "0.0.2" }
+  s.source       = { :git => "https://github.com/lishiping/SafeData.git", :tag => "0.0.2" }
 
    s.source_files  = 'SafeData/SafeFoundation/*.{h,m,mm,cpp,c}', 'SafeData/SafeFoundation/*/*.{h,m,mm,cpp,c}'
    s.public_header_files = 'SafeData/SafeFoundation/*.h', 'SafeData/SafeFoundation/*/*.h'
