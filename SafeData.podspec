@@ -11,7 +11,7 @@ In the judgement before using arrays and dictionaries, protect the data
 DESC
 
   s.homepage     = "https://github.com/lishiping/SafeData.git"
-  s.license      = "MIT (example)"
+  s.license      = "LICENSE"
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
   s.author             = { "lishiping" => "83118274@qq.com" }
