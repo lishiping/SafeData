@@ -1,9 +1,18 @@
 //
 //  NSArray+Safe.m
-//
+//  e-mail:83118274@qq.com
 //  Created by lishiping on 16/9/19.
 //  Copyright © 2016年 uxin-lishiping. All rights reserved.
 //
+
+#define VALUE(value, func1, func2)  {\
+\
+if ([value isKindOfClass:[NSNumber class]]) {\
+return ([(NSNumber *)value func1]);\
+} else if ([value isKindOfClass:[NSString class]]) {\
+return ([(NSString *)value func2]);\
+}\
+}
 
 #import "NSArray+Safe.h"
 

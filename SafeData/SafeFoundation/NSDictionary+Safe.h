@@ -1,20 +1,10 @@
 //
 //  NSDictionary+Safe.h
-//  CarHomeImageBrowse
-//
-//  Created by uxin-lishiping on 16/10/19.
+//  e-mail:83118274@qq.com
+//  Created by lishiping on 16/10/19.
 //  Copyright © 2016年 uxin-lishiping. All rights reserved.
 //
 
-
-#define VALUE_FOR_KEY(key, func1, func2)  {\
-id _ret = [self objectForKey:key];\
-if ([_ret isKindOfClass:[NSNumber class]]) {\
-return ([(NSNumber *)_ret func1]);\
-} else if ([_ret isKindOfClass:[NSString class]]) {\
-return ([(NSString *)_ret func2]);\
-}\
-}
 
 #import <Foundation/Foundation.h>
 
@@ -22,28 +12,41 @@ return ([(NSString *)_ret func2]);\
 
 /********safe get method***/
 
-- (NSString *)safe_stringForKey:(id)key;             // get string or nil
+// get string or nil
+- (NSString *)safe_stringForKey:(id)key;
 
-- (NSArray *)safe_arrayForKey:(id)key;               // get array or nil
+// get array or nil
+- (NSArray *)safe_arrayForKey:(id)key;
 
-- (NSDictionary *)safe_dictionaryForKey:(id)key;     // get dictionary or nil
-- (NSNumber *)safe_numberForKey:(id)key;             // get number or nil
+// get dictionary or nil
+- (NSDictionary *)safe_dictionaryForKey:(id)key;
 
-- (NSData *)safe_dataForKey:(id)key;                 // get NSData
+// get number or nil
+- (NSNumber *)safe_numberForKey:(id)key;
 
-- (NSInteger)safe_integerForKey:(id)key;                 // 值为数字、字符串都返回NSInteger
+// get data or nil
+- (NSData *)safe_dataForKey:(id)key;
+
+//get NSInteger or nil
+- (NSInteger)safe_integerForKey:(id)key;
 
 //OC type transform C type
+// transform NSNumber or NSString to int
+- (int)safe_intForKey:(id)key;
 
-- (int)safe_intForKey:(id)key;                   // 值为数字、字符串都返回int
+// transform NSNumber or NSString to long
+- (long)safe_longForKey:(id)key;
 
-- (long)safe_longForKey:(id)key;                 // 值为数字、字符串都返回long
+// transform NSNumber or NSString to long long
+- (long long)safe_longLongForKey:(id)key;
 
-- (long long)safe_longLongForKey:(id)key;        // 值为数字、字符串都返回long long
+// transform NSNumber or NSString to double
+- (double)safe_doubleForKey:(id)key;
 
-- (double)safe_doubleForKey:(id)key;             // 值为数字、字符串都返回double
+// transform NSNumber or NSString to float
+- (float)safe_floatForKey:(id)key;
 
-- (float)safe_floatForKey:(id)key;                       // 值为数字、字符串都返回float
-- (BOOL)safe_boolForKey:(id)key;                         // 值为布尔、数字、字符串都返回bool
+// transform NSNumber or NSString to BOOL
+- (BOOL)safe_boolForKey:(id)key;
 
 @end

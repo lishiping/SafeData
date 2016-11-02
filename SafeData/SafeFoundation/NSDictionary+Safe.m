@@ -1,10 +1,18 @@
 //
 //  NSDictionary+Safe.m
-//  CarHomeImageBrowse
-//
-//  Created by uxin-lishiping on 16/10/19.
+//  e-mail:83118274@qq.com
+//  Created by lishiping on 16/10/19.
 //  Copyright © 2016年 uxin-lishiping. All rights reserved.
 //
+
+#define VALUE_FOR_KEY(key, func1, func2)  {\
+id _ret = [self objectForKey:key];\
+if ([_ret isKindOfClass:[NSNumber class]]) {\
+return ([(NSNumber *)_ret func1]);\
+} else if ([_ret isKindOfClass:[NSString class]]) {\
+return ([(NSString *)_ret func2]);\
+}\
+}
 
 #import "NSDictionary+Safe.h"
 
@@ -80,35 +88,40 @@
     VALUE_FOR_KEY(key, intValue, intValue);
     return (0);
 }
-- (long)safe_longForKey:(id)key                // 得到long
+
+- (long)safe_longForKey:(id)key
 {
     VALUE_FOR_KEY(key, longValue, intValue);
     return (0);
 }
-- (long long)safe_longLongForKey:(id)key;        // 得到long long
+
+- (long long)safe_longLongForKey:(id)key;
 {
     VALUE_FOR_KEY(key, longLongValue,longLongValue);
     return (0);
 }
-- (double)safe_doubleForKey:(id)key;             // 得到double
+
+- (double)safe_doubleForKey:(id)key;
 {
     VALUE_FOR_KEY(key, doubleValue,doubleValue);
     return (0.0);
 }
-- (NSInteger)safe_integerForKey:(id)key          // 得到NSInteger(long)
+
+- (NSInteger)safe_integerForKey:(id)key
 {
     VALUE_FOR_KEY(key, integerValue,integerValue);
     return (0);
 }
+
 - (float)safe_floatForKey:(id)key
 {
     VALUE_FOR_KEY(key, floatValue,floatValue);
     return (0);
 }
+
 - (BOOL)safe_boolForKey:(id)key
 {
     VALUE_FOR_KEY(key, boolValue,boolValue);
-    
     return (NO);
 }
 
