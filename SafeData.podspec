@@ -2,8 +2,9 @@
 Pod::Spec.new do |s|
 
   s.name         = "SafeData"
-  s.version      = "0.0.4"
-  s.summary      = "Create Category for NSArray and NSDictionary to Protect Data."
+  s.version      = "0.0.5"
+  s.summary      = "Create Category for NSArray and NSDictionary to Protect Data.
+保护数组防止插入空数组，防止数组越界，保护字典，可以直接得到转换后的类型"
 
   s.description  = <<-DESC
 
@@ -18,7 +19,7 @@ DESC
 
   s.ios.deployment_target = "5.0"
 
-  s.source       = { :git => "https://github.com/lishiping/SafeData.git", :tag => "0.0.4" }
+  s.source       = { :git => "https://github.com/lishiping/SafeData.git", :tag => "0.0.5" }
 
    s.source_files  = 'SafeData/SafeFoundation/*.{h,m,mm,cpp,c}', 'SafeData/SafeFoundation/*/*.{h,m,mm,cpp,c}'
    s.public_header_files = 'SafeData/SafeFoundation/*.h', 'SafeData/SafeFoundation/*/*.h'
