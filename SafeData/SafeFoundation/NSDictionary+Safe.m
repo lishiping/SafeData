@@ -2,7 +2,7 @@
 //  NSDictionary+Safe.m
 //  e-mail:83118274@qq.com
 //  Created by lishiping on 16/10/19.
-//  Copyright © 2016年 uxin-lishiping. All rights reserved.
+//  Copyright © 2016年 lishiping. All rights reserved.
 //
 
 #define VALUE_FOR_KEY(key, func1, func2)  {\
@@ -18,8 +18,12 @@ return ([(NSString *)_ret func2]);\
 
 @implementation NSDictionary (Safe)
 
-- (NSString *)safe_stringForKey:(id)key;
+- (nullable NSString *)safe_stringForKey:(nullable id)key
 {
+    if (!key) {
+        return nil;
+    }
+    
     id object = [self objectForKey:key];
     
     NSString *ret=nil;
@@ -44,8 +48,12 @@ return ([(NSString *)_ret func2]);\
     
 }
 
-- (NSArray *)safe_arrayForKey:(id)key
+- (nullable NSArray *)safe_arrayForKey:(nullable id)key
 {
+    if (!key) {
+        return nil;
+    }
+    
     id ret = [self objectForKey:key];
     if (ret&&[ret isKindOfClass:[NSArray class]])
     {
@@ -54,8 +62,11 @@ return ([(NSString *)_ret func2]);\
     return (nil);
 }
 
-- (NSDictionary *)safe_dictionaryForKey:(id)key
+- (nullable NSDictionary *)safe_dictionaryForKey:(nullable id)key
 {
+    if (!key) {
+        return nil;
+    }
     id ret = [self objectForKey:key];
     if (ret&&[ret isKindOfClass:[NSDictionary class]])
     {
@@ -64,8 +75,12 @@ return ([(NSString *)_ret func2]);\
     return (nil);
 }
 
-- (NSNumber *)safe_numberForKey:(id)key
+- (nullable NSNumber *)safe_numberForKey:(nullable id)key
 {
+    if (!key) {
+        return nil;
+    }
+    
     id ret = [self objectForKey:key];
     if ([ret isKindOfClass:[NSNumber class]])
     {
@@ -74,8 +89,12 @@ return ([(NSString *)_ret func2]);\
     return (nil);
 }
 
-- (NSData *)safe_dataForKey:(id)key
+- (nullable NSData *)safe_dataForKey:(nullable id)key
 {
+    if (!key) {
+        return nil;
+    }
+    
     id ret = [self objectForKey:key];
     if ([ret isKindOfClass:[NSData class]])
     {
@@ -84,45 +103,151 @@ return ([(NSString *)_ret func2]);\
     return (nil);
 }
 
-- (int)safe_intForKey:(id)key{
+- (int)safe_intForKey:(nullable id)key
+{
+    
+    if (!key) {
+        return 0;
+    }
+    
     VALUE_FOR_KEY(key, intValue, intValue);
     return (0);
 }
 
-- (long)safe_longForKey:(id)key
+- (long)safe_longForKey:(nullable id)key
 {
+    if (!key) {
+        return 0.0f;
+    }
+    
     VALUE_FOR_KEY(key, longValue, intValue);
-    return (0);
+    return (0.0f);
 }
 
-- (long long)safe_longLongForKey:(id)key;
+- (long long)safe_longLongForKey:(nullable id)key
 {
+    if (!key) {
+        return 0.0f;
+    }
     VALUE_FOR_KEY(key, longLongValue,longLongValue);
-    return (0);
+    return (0.0f);
 }
 
-- (double)safe_doubleForKey:(id)key;
+- (double)safe_doubleForKey:(nullable id)key
 {
+    if (!key) {
+        return 0.0f;
+    }
     VALUE_FOR_KEY(key, doubleValue,doubleValue);
     return (0.0);
 }
 
-- (NSInteger)safe_integerForKey:(id)key
+- (NSInteger)safe_integerForKey:(nullable id)key
 {
+    if (!key) {
+        return 0;
+    }
     VALUE_FOR_KEY(key, integerValue,integerValue);
     return (0);
 }
 
-- (float)safe_floatForKey:(id)key
+- (float)safe_floatForKey:(nullable id)key
 {
+    if (!key) {
+        return 0.0f;
+    }
     VALUE_FOR_KEY(key, floatValue,floatValue);
-    return (0);
+    return (0.0);
 }
 
-- (BOOL)safe_boolForKey:(id)key
+- (BOOL)safe_boolForKey:(nullable id)key
 {
+    if (!key) {
+        return NO;
+    }
+    
     VALUE_FOR_KEY(key, boolValue,boolValue);
     return (NO);
 }
 
+// add anObject
+- (nullable NSDictionary *)safe_dictionaryBySetObject:(nullable id)anObject forKey:(nullable id)aKey
+{
+    if (aKey) {
+        NSMutableDictionary *mDict = [self mutableCopy];
+        [mDict safe_setObject:anObject forKey:aKey];
+        return ([mDict copy]);
+    }
+    
+    return self;
+}
+
+- (nullable NSDictionary *)safe_dictionaryAddEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
+{
+    if (otherDictionary) {
+        NSMutableDictionary *dic = [self mutableCopy];
+        [dic addEntriesFromDictionary:otherDictionary];
+        return ([dic copy]);
+    }
+    
+    return self;
+}
+
+- (nullable NSData *)toJSONData
+{
+    NSData *ret = nil;
+    NSError *err = nil;
+    ret = [NSJSONSerialization dataWithJSONObject:self
+                                          options:0
+                                            error:&err];
+    if (err)
+    {
+        NSLog(@"DictionarytoJsonDataError:%@",err.description);
+        ret = nil;
+    }
+    return (ret);
+}
+
 @end
+
+
+
+#pragma mark - NSMutableDictionary + Safe
+#define KeyType id
+#define ObjectType id
+
+@implementation NSMutableDictionary (Safe)
+
+- (BOOL)safe_setObject:(nullable ObjectType)anObject forKey:(nullable KeyType)aKey;
+{
+    BOOL ret = NO;
+    if (aKey)
+    {
+        [self setObject:anObject forKey:aKey];
+        ret = YES;
+    }
+    return (ret);
+}
+
+- (BOOL)safe_setString:(nullable NSString *)anObject forKey:(nullable KeyType)aKey;
+{
+    BOOL ret = NO;
+    if (aKey)
+    {
+        if([anObject isKindOfClass:[NSString class]] &&anObject.length>0)
+        {
+            [self setObject:anObject forKey:aKey];
+        }
+        else
+        {
+            [self removeObjectForKey:aKey];
+        }
+        ret = YES;
+    }
+    return (ret);
+}
+
+@end
+
+
+

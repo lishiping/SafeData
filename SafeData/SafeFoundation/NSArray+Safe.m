@@ -2,7 +2,7 @@
 //  NSArray+Safe.m
 //  e-mail:83118274@qq.com
 //  Created by lishiping on 16/9/19.
-//  Copyright © 2016年 uxin-lishiping. All rights reserved.
+//  Copyright © 2016年 lishiping. All rights reserved.
 //
 
 #define VALUE(value, func1, func2)  {\
@@ -202,6 +202,7 @@ return ([(NSString *)value func2]);\
                                             error:&err];
     if (err)
     {
+        NSLog(@"NSArraytoJsonDataError:%@",err.description);
         ret = nil;
     }
     return (ret);
