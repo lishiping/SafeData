@@ -8,7 +8,6 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
 
 In the judgement before using arrays and dictionaries, protect the data
-保护数组防止插入空数组，防止数组越界，保护字典，可以直接得到转换后的类型
 DESC
 
   s.homepage     = "https://github.com/lishiping/SafeData.git"
@@ -17,7 +16,7 @@ DESC
 
   s.author             = { "lishiping" => "83118274@qq.com" }
 
-  s.ios.deployment_target = "5.0"
+  s.ios.deployment_target = "7.0"
 
   s.source       = { :git => "https://github.com/lishiping/SafeData.git", :tag => "0.0.5" }
 
