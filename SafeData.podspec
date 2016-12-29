@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SafeData"
-  s.version      = “0.0.4"
+  s.version      = "0.0.4"
   s.summary      = "Create Category for NSArray and NSDictionary to Protect Data."
 
   s.description  = <<-DESC
