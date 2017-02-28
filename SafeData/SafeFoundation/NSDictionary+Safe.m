@@ -120,7 +120,7 @@ return ([(NSString *)_ret func2]);\
         return 0.0f;
     }
     
-    VALUE_FOR_KEY(key, longValue, intValue);
+    VALUE_FOR_KEY(key, longValue, longLongValue);
     return (0.0f);
 }
 
