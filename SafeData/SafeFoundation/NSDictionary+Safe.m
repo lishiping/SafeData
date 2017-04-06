@@ -6,6 +6,9 @@
 //
 
 #define VALUE_FOR_KEY(key, func1, func2)  {\
+if (![self isKindOfClass:[NSDictionary class]]||!key) {\
+return (0.0f);\
+}\
 id _ret = [self objectForKey:key];\
 if ([_ret isKindOfClass:[NSNumber class]]) {\
 return ([(NSNumber *)_ret func1]);\
@@ -18,31 +21,31 @@ return ([(NSString *)_ret func2]);\
 
 @implementation NSDictionary (Safe)
 
+
 - (nullable NSString *)safe_stringForKey:(nullable id)key
 {
-    if (!key) {
-        return nil;
-    }
-    
-    id object = [self objectForKey:key];
-    
     NSString *ret=nil;
     
-    if ([object isKindOfClass:[NSString class]])
+    if (SP_IS_KINDOF(self, NSDictionary) && key)
     {
-        ret = (NSString *)object;
-    }
-    else if ([object isKindOfClass:[NSNumber class]])
-    {
-        ret = [object stringValue];
-    }
-    else if ([object isKindOfClass:[NSURL class]])
-    {
-        ret = [(NSURL *)object absoluteString];
-    }
-    else
-    {
-        ret = [object description];
+        id object = [self objectForKey:key];
+        
+        if ([object isKindOfClass:[NSString class]])
+        {
+            ret = (NSString *)object;
+        }
+        else if ([object isKindOfClass:[NSNumber class]])
+        {
+            ret = [object stringValue];
+        }
+        else if ([object isKindOfClass:[NSURL class]])
+        {
+            ret = [(NSURL *)object absoluteString];
+        }
+        else
+        {
+            ret = [object description];
+        }
     }
     return (ret);
     
@@ -50,57 +53,57 @@ return ([(NSString *)_ret func2]);\
 
 - (nullable NSArray *)safe_arrayForKey:(nullable id)key
 {
-    if (!key) {
-        return nil;
+    NSArray *ret = nil;
+    if (SP_IS_KINDOF(self, NSDictionary) && key) {
+        id object = [self objectForKey:key];
+        if (object&&[object isKindOfClass:[NSArray class]])
+        {
+            ret = object;
+        }
     }
     
-    id ret = [self objectForKey:key];
-    if (ret&&[ret isKindOfClass:[NSArray class]])
-    {
-        return ((NSArray *)ret);
-    }
-    return (nil);
+    return (ret);
 }
 
 - (nullable NSDictionary *)safe_dictionaryForKey:(nullable id)key
 {
-    if (!key) {
-        return nil;
+    NSDictionary *ret = nil;
+    if (SP_IS_KINDOF(self, NSDictionary) && key) {
+        id object = [self objectForKey:key];
+        if (object&&[object isKindOfClass:[NSDictionary class]])
+        {
+            ret = object;
+        }
     }
-    id ret = [self objectForKey:key];
-    if (ret&&[ret isKindOfClass:[NSDictionary class]])
-    {
-        return ((NSDictionary *)ret);
-    }
-    return (nil);
+    return (ret);
 }
 
 - (nullable NSNumber *)safe_numberForKey:(nullable id)key
 {
-    if (!key) {
-        return nil;
+    NSNumber *ret = nil;
+    if (SP_IS_KINDOF(self, NSDictionary) && key) {
+        id object= [self objectForKey:key];
+        if (object&&[object isKindOfClass:[NSNumber class]])
+        {
+            ret = object;
+        }
     }
     
-    id ret = [self objectForKey:key];
-    if ([ret isKindOfClass:[NSNumber class]])
-    {
-        return ((NSNumber *)ret);
-    }
-    return (nil);
+    return (ret);
 }
 
 - (nullable NSData *)safe_dataForKey:(nullable id)key
 {
-    if (!key) {
-        return nil;
+    NSData *ret = nil;
+    if (SP_IS_KINDOF(self, NSDictionary) && key) {
+        id object= [self objectForKey:key];
+        if (object&&[object isKindOfClass:[NSData class]])
+        {
+            ret = object;
+        }
     }
     
-    id ret = [self objectForKey:key];
-    if ([ret isKindOfClass:[NSData class]])
-    {
-        return ((NSData *)ret);
-    }
-    return (nil);
+    return (ret);
 }
 
 - (int)safe_intForKey:(nullable id)key
@@ -184,7 +187,7 @@ return ([(NSString *)_ret func2]);\
 
 - (nullable NSDictionary *)safe_dictionaryAddEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
 {
-    if (otherDictionary) {
+    if (SP_IS_KINDOF(self, NSDictionary)&&SP_IS_KINDOF(otherDictionary, NSDictionary) && otherDictionary.allKeys.count>0) {
         NSMutableDictionary *dic = [self mutableCopy];
         [dic addEntriesFromDictionary:otherDictionary];
         return ([dic copy]);
@@ -221,21 +224,9 @@ return ([(NSString *)_ret func2]);\
 - (BOOL)safe_setObject:(nullable ObjectType)anObject forKey:(nullable KeyType)aKey;
 {
     BOOL ret = NO;
-    if (aKey)
+    if (SP_IS_KINDOF(self, NSMutableDictionary) && aKey)
     {
-        [self setObject:anObject forKey:aKey];
-        ret = YES;
-    }
-    return (ret);
-}
-
-- (BOOL)safe_setString:(nullable NSString *)anObject forKey:(nullable KeyType)aKey;
-{
-    BOOL ret = NO;
-    if (aKey)
-    {
-        if([anObject isKindOfClass:[NSString class]] &&anObject.length>0)
-        {
+        if (anObject) {
             [self setObject:anObject forKey:aKey];
         }
         else
@@ -245,6 +236,22 @@ return ([(NSString *)_ret func2]);\
         ret = YES;
     }
     return (ret);
+}
+
+- (BOOL)safe_setString:(nullable NSString *)anObject forKey:(nullable KeyType)aKey;
+{
+    if (SP_IS_KINDOF(anObject, NSString)) {
+        
+        return [self safe_setObject:anObject forKey:aKey];
+    }
+    else if(SP_IS_KINDOF(anObject, NSNumber))
+    {
+        return [self safe_setObject:[(NSNumber*)anObject stringValue] forKey:aKey];
+    }
+    else
+    {
+        return [self safe_setObject:nil forKey:aKey];
+    }
 }
 
 @end

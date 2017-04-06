@@ -1,6 +1,6 @@
-# SafeData
-create category to protect array data and dictionary data 
-
 #pod 'SafeData',                   # 加入SafeData
 
-#本公开库非常简单，但是非常实用,主要是保护数组防止插入空数组，防止数组越界，使用KVC快速取出数组元素内容，加入排重数组内数据模型相同的内容，在开发中非常实用，字典的类别也非常实用，可以直接得到转换后的类型
+create category to protect array data and dictionary data To prevent the crash
+
+
+#本开源库非常实用,检查数据类型保护数组防止插入空数组，防止数组越界，使用KVC快速取出数组元素内容，加入排重数组内数据模型相同的内容，字典直接得到转换后的OC,C类型

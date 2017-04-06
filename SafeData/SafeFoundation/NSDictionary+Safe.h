@@ -5,6 +5,8 @@
 //  Copyright © 2016年 lishiping. All rights reserved.
 //
 
+#define SP_IS_KINDOF(obj, cls)  [(obj) isKindOfClass:[cls class]]
+
 
 #import <Foundation/Foundation.h>
 
