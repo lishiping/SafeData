@@ -187,9 +187,9 @@ return ([(NSString *)_ret func2]);\
 
 - (nullable NSDictionary *)safe_dictionaryAddEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
 {
-    if (SP_IS_KINDOF(self, NSDictionary)&&SP_IS_KINDOF(otherDictionary, NSDictionary) && otherDictionary.allKeys.count>0) {
+    if (SP_IS_KINDOF(self, NSDictionary)) {
         NSMutableDictionary *dic = [self mutableCopy];
-        [dic addEntriesFromDictionary:otherDictionary];
+        [dic safe_addEntriesFromDictionary:otherDictionary];
         return ([dic copy]);
     }
     
@@ -254,6 +254,12 @@ return ([(NSString *)_ret func2]);\
     }
 }
 
+- (void)safe_addEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
+{
+    if (SP_IS_KINDOF(self, NSMutableDictionary) && SP_IS_KINDOF(otherDictionary, NSDictionary) && otherDictionary.allKeys.count>0) {
+        [self addEntriesFromDictionary:otherDictionary];
+    }
+}
 @end
 
 

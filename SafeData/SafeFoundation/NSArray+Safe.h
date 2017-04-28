@@ -4,6 +4,15 @@
 //  Created by lishiping on 16/9/19.
 //  Copyright © 2016年 lishiping. All rights reserved.
 //
+//If you feel the WebView open source is of great help to you, please give the author some praise, recognition you give great encouragement, the author also hope you give the author other open source libraries some praise, the author will release better open source library for you again
+//如果您感觉本开源WebView对您很有帮助，请给作者点个赞，您的认可给作者极大的鼓励，也希望您给作者其他的开源库点个赞，作者还会再发布更好的开源库给大家
+
+//github address//https://github.com/lishiping/SPWebView
+//github address//https://github.com/lishiping/SPDebugBar
+//github address//https://github.com/lishiping/SPFastPush
+//github address//https://github.com/lishiping/SPMacro
+//github address//https://github.com/lishiping/SafeData
+
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -13,7 +22,7 @@
 
 /********safe get method***/
 
-- (id)safe_objectAtIndex:(NSUInteger)index;
+- (id)safe_objectAtIndex:(NSInteger)index;
 
 - (NSString*)safe_stringAtIndex:(NSUInteger)index;
 
@@ -50,7 +59,7 @@
  **/
 - (NSArray *)safe_valueForKey:(NSString *)key;
 
-/****safe remove method***/
+/****fast safe remove method***/
 
 - (NSArray*)safe_arrayByRemoveObject:(id)anObject;
 
@@ -58,11 +67,18 @@
 
 - (NSArray*)safe_arrayByRemoveNullObjects;
 
+/****fast safe add method***/
+
+- (NSArray*)safe_arrayByAddObject:(id)anObject;
+
+- (NSArray*)safe_arrayByAddObjects:(NSArray*)array;
+
 /****is Contain method***/
 
 - (BOOL)safe_containsObject:(id)anObject;
 
 - (BOOL)safe_containsObjectsArray:(NSArray *)otherArray;
+
 
 /**
  1. Determine whether there is a same element in an array model

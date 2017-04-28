@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SafeData"
-  s.version      = "0.0.17"
+  s.version      = "0.0.18"
   s.summary      = "Category for NSArray and NSDictionary to Protect Data prevent the crash.检查数据类型防止插入空数据和数组越界，字典直接得到转换后的OC,C类型"
 
 
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "6.0"
 
-  s.source       = { :git => "https://github.com/lishiping/SafeData.git", :tag => "0.0.17" }
+  s.source       = { :git => "https://github.com/lishiping/SafeData.git", :tag => s.version }
 
    s.source_files  = 'SafeData/SafeFoundation/*.{h,m,mm,cpp,c}', 'SafeData/SafeFoundation/*/*.{h,m,mm,cpp,c}'
    s.public_header_files = 'SafeData/SafeFoundation/*.h', 'SafeData/SafeFoundation/*/*.h'

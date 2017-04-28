@@ -5,7 +5,7 @@
 //  Copyright © 2016年 lishiping. All rights reserved.
 //
 
-#define VALUE(value, func1, func2)  {\
+#define SAFE_VALUE(value, func1, func2)  {\
 \
 if ([value isKindOfClass:[NSNumber class]]) {\
 return ([(NSNumber *)value func1]);\
@@ -20,65 +20,55 @@ return ([(NSString *)value func2]);\
 
 @implementation NSArray (Safe)
 
-- (id)safe_objectAtIndex:(NSUInteger)index
+- (id)safe_objectAtIndex:(NSInteger)index
 {
-    if (SP_IS_KINDOF(self, NSArray) &&index<self.count) {
-        return ((([self count] > index)) ? [self objectAtIndex:index] : nil);
+    if (SP_IS_KINDOF(self, NSArray) && index<self.count && index>=0) {
+        return [self objectAtIndex:index];
     }
     return nil;
 }
 
 - (NSString*)safe_stringAtIndex:(NSUInteger)index
 {
-    if (SP_IS_KINDOF(self, NSArray) && self.count > index) {
-        id obj = [self objectAtIndex:index];
-        if ([obj isKindOfClass:[NSString class]]) {
-            return (obj);
-        }
+    id obj = [self safe_objectAtIndex:index];
+    if ([obj isKindOfClass:[NSString class]]) {
+        return (obj);
     }
     return nil;
 }
 
 - (NSDictionary*)safe_dictionaryAtIndex:(NSUInteger)index
 {
-    if (SP_IS_KINDOF(self, NSArray) && [self count] > index) {
-        id obj = [self objectAtIndex:index];
-        if ([obj isKindOfClass:[NSDictionary class]]) {
-            return (obj);
-        }
+    id obj = [self safe_objectAtIndex:index];
+    if ([obj isKindOfClass:[NSDictionary class]]) {
+        return (obj);
     }
     return nil;
 }
 
 - (NSArray*)safe_arrayAtIndex:(NSUInteger)index
 {
-    if (SP_IS_KINDOF(self, NSArray) && [self count] > index) {
-        id obj = [self objectAtIndex:index];
-        if ([obj isKindOfClass:[NSArray class]]) {
-            return (obj);
-        }
+    id obj = [self safe_objectAtIndex:index];
+    if ([obj isKindOfClass:[NSArray class]]) {
+        return (obj);
     }
     return nil;
 }
 
 - (UIImage*)safe_imageAtIndex:(NSUInteger)index
 {
-    if (SP_IS_KINDOF(self, NSArray) && [self count] > index) {
-        id obj = [self objectAtIndex:index];
-        if ([obj isKindOfClass:[UIImage class]]) {
-            return (obj);
-        }
+    id obj = [self safe_objectAtIndex:index];
+    if ([obj isKindOfClass:[UIImage class]]) {
+        return (obj);
     }
     return nil;
 }
 
 - (NSData*)safe_dataAtIndex:(NSUInteger)index
 {
-    if (SP_IS_KINDOF(self, NSArray) && [self count] > index) {
-        id obj = [self objectAtIndex:index];
-        if ([obj isKindOfClass:[NSData class]]) {
-            return (obj);
-        }
+    id obj = [self safe_objectAtIndex:index];
+    if ([obj isKindOfClass:[NSData class]]) {
+        return (obj);
     }
     return nil;
 }
@@ -86,8 +76,7 @@ return ([(NSString *)value func2]);\
 - (NSInteger)safe_integerAtIndex:(NSUInteger)index;
 {
     id obj = [self safe_objectAtIndex:index];
-    
-    VALUE(obj, integerValue, integerValue);
+    SAFE_VALUE(obj, integerValue, integerValue);
     
     return 0;
 }
@@ -96,7 +85,7 @@ return ([(NSString *)value func2]);\
 {
     id obj = [self safe_objectAtIndex:index];
     
-    VALUE(obj, intValue, intValue);
+    SAFE_VALUE(obj, intValue, intValue);
     
     return 0;
 }
@@ -105,7 +94,7 @@ return ([(NSString *)value func2]);\
 {
     id obj = [self safe_objectAtIndex:index];
     
-    VALUE(obj, longValue, integerValue);
+    SAFE_VALUE(obj, longValue, integerValue);
     
     return 0;
 }
@@ -114,7 +103,7 @@ return ([(NSString *)value func2]);\
 {
     id obj = [self safe_objectAtIndex:index];
     
-    VALUE(obj, longLongValue, longLongValue);
+    SAFE_VALUE(obj, longLongValue, longLongValue);
     
     return 0;
 }
@@ -123,7 +112,7 @@ return ([(NSString *)value func2]);\
 {
     id obj = [self safe_objectAtIndex:index];
     
-    VALUE(obj, doubleValue, doubleValue);
+    SAFE_VALUE(obj, doubleValue, doubleValue);
     
     return 0.0f;
 }
@@ -132,7 +121,7 @@ return ([(NSString *)value func2]);\
 {
     id obj = [self safe_objectAtIndex:index];
     
-    VALUE(obj, floatValue, floatValue);
+    SAFE_VALUE(obj, floatValue, floatValue);
     
     return 0.0f;
 }
@@ -204,11 +193,34 @@ return ([(NSString *)value func2]);\
     NSArray *ret = self;
     if (self.count>0) {
         NSMutableArray *temp = [ret mutableCopy];
-        for (id obj in self) {
-            if (![obj isKindOfClass:[NSNull class]]) {
-                [temp safe_addObject:obj];
+        [temp enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[NSNull class]]) {
+                [temp safe_removeObject:obj];
             }
-        }
+        }];
+        ret = [NSArray arrayWithArray:temp];
+    }
+    return ret;
+}
+
+-(NSArray*)safe_arrayByAddObject:(id)anObject
+{
+    NSArray *ret = self;
+    if (SP_IS_KINDOF(self, NSArray) && anObject && self.count>0) {
+        NSMutableArray *temp = [ret mutableCopy];
+        [temp safe_addObject:anObject];
+        ret = [NSArray arrayWithArray:temp];
+    }
+    return ret;
+}
+
+-(NSArray*)safe_arrayByAddObjects:(NSArray *)array
+{
+    NSArray *ret = self;
+    if (SP_IS_KINDOF(self, NSArray) &&SP_IS_KINDOF(array, NSArray)  && array.count>0 && self.count>0)
+    {
+        NSMutableArray *temp = [ret mutableCopy];
+        [temp safe_addObjectsFromArray:array];
         ret = [NSArray arrayWithArray:temp];
     }
     return ret;
@@ -224,7 +236,7 @@ return ([(NSString *)value func2]);\
 
 -(BOOL)safe_containsObjectsArray:(NSArray *)otherArray
 {
-    if (self.count>0 && otherArray.count>0&&[otherArray isKindOfClass:[NSArray class]]) {
+    if (self.count>0 && otherArray.count>0&&SP_IS_KINDOF(self, NSArray)&&SP_IS_KINDOF(otherArray, NSArray)) {
         
         NSSet *set = [NSSet setWithArray:self];
         NSSet *set2 = [NSSet setWithArray:otherArray];
@@ -241,9 +253,9 @@ return ([(NSString *)value func2]);\
     {
         for (NSDictionary *obj1 in self)
         {
-        //找到字典里面以唯一id为标识的字段相比较
-        long oldid  = [obj1 safe_longForKey:longKey];
-        long newid  = [newDic safe_longForKey:longKey];
+            //找到字典里面以唯一id为标识的字段相比较
+            long oldid  = [obj1 safe_longForKey:longKey];
+            long newid  = [newDic safe_longForKey:longKey];
             if (newid == oldid) {
                 return YES;
             }
@@ -257,9 +269,9 @@ return ([(NSString *)value func2]);\
     if (newDic && [newDic isKindOfClass:[NSDictionary class]] && stringKey.length>0)
     {
         for (NSDictionary *obj1 in self) {
-        //找到字典里面以唯一字符串为标识的字段相比较
-        NSString *oldStr  = [obj1 safe_stringForKey:stringKey];
-        NSString *newStr  = [newDic safe_stringForKey:stringKey];
+            //找到字典里面以唯一字符串为标识的字段相比较
+            NSString *oldStr  = [obj1 safe_stringForKey:stringKey];
+            NSString *newStr  = [newDic safe_stringForKey:stringKey];
             if ([newStr isEqualToString:oldStr]) {
                 return YES;
             }
