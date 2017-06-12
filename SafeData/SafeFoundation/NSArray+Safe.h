@@ -180,7 +180,7 @@
  4.通常适用于APP获取网络数据做排重处理
  5.唯一字段是NSString类型数据的时候适用
  @param newArray 新数组，数组元素是字典
- @param longKey 数组元素内NSDictionary中可以判断唯一数据模型的字段
+ @param stringKey 数组元素内NSDictionary中可以判断唯一数据模型的字段
  @return 检查数据元素是否是NSDictionary
  */
 - (BOOL)safe_addObjectsByRemoveRepeatWithNewArray:(NSArray<NSDictionary*>*)newArray stringKey:(NSString*)stringKey;
