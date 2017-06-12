@@ -5,17 +5,32 @@
 //  Copyright © 2016年 lishiping. All rights reserved.
 //
 
-//If you feel the WebView open source is of great help to you, please give the author some praise, recognition you give great encouragement, the author also hope you give the author other open source libraries some praise, the author will release better open source library for you again
-//如果您感觉本开源WebView对您很有帮助，请给作者点个赞，您的认可给作者极大的鼓励，也希望您给作者其他的开源库点个赞，作者还会再发布更好的开源库给大家
+//If you feel this open source library is of great help to you, please open the URL to the point of a great, great encouragement your recognition to the author, the author will release better open source library for you again
+//如果您感觉本开源库对您很有帮助，请打开URL给作者点个赞，您的认可给作者极大的鼓励，作者还会再发布更好的开源库给大家
 
 //github address//https://github.com/lishiping/SPWebView
 //github address//https://github.com/lishiping/SPDebugBar
 //github address//https://github.com/lishiping/SPFastPush
 //github address//https://github.com/lishiping/SPMacro
 //github address//https://github.com/lishiping/SafeData
+//github address//https://github.com/lishiping/SPCategory
+
 
 
 #define SP_IS_KINDOF(obj, cls)  [(obj) isKindOfClass:[cls class]]
+
+
+#if DEBUG
+
+#define ASSERT(x)               assert((x))
+#define SP_LOG(...) NSLog(__VA_ARGS__);
+
+#else
+
+#define ASSERT(x)
+#define SP_LOG(...) 
+
+#endif
 
 
 #import <Foundation/Foundation.h>
@@ -61,6 +76,28 @@
 // transform NSNumber or NSString to BOOL
 - (BOOL)safe_boolForKey:(nullable id)key;
 
+
+/**
+ 该方法快速取出嵌套字典内的字段
+ 例如：NSDictionary *dic =  @{@"one":@{@"two":@{@"three":@(3)}}};
+ id ret = [dic safe_stringForKeyPath:@"one.two.three"];
+ 得到ret为@"3";
+ @param keyPath 嵌套字段路径
+ @return 返回数据
+ */
+- (NSString*_Nullable)safe_stringForKeyPath:(NSString *_Nonnull)keyPath;
+    
+/**
+ 该方法快速取出嵌套字典内的字段
+ 例如：NSDictionary *dic =  @{@"one":@{@"two":@{@"three":@(3)}}};
+   id ret = [dic safe_objectForKeyPath:@"one.two.three"];
+   得到ret为3;
+ @param keyPath 嵌套字段路径
+ @return 返回数据
+ */
+- (id _Nullable)safe_objectForKeyPath:(NSString *_Nonnull)keyPath;
+
+    
 //if anObject is nil ,mean remove value for aKey
 //anObject为空则等于移除键值
 - (nullable NSDictionary *)safe_dictionaryBySetObject:(nullable id)anObject forKey:(nullable id)aKey;

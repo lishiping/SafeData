@@ -4,14 +4,15 @@
 //  Created by lishiping on 16/9/19.
 //  Copyright © 2016年 lishiping. All rights reserved.
 //
-//If you feel the WebView open source is of great help to you, please give the author some praise, recognition you give great encouragement, the author also hope you give the author other open source libraries some praise, the author will release better open source library for you again
-//如果您感觉本开源WebView对您很有帮助，请给作者点个赞，您的认可给作者极大的鼓励，也希望您给作者其他的开源库点个赞，作者还会再发布更好的开源库给大家
+//If you feel this open source library is of great help to you, please open the URL to the point of a great, great encouragement your recognition to the author, the author will release better open source library for you again
+//如果您感觉本开源库对您很有帮助，请打开URL给作者点个赞，您的认可给作者极大的鼓励，作者还会再发布更好的开源库给大家
 
 //github address//https://github.com/lishiping/SPWebView
 //github address//https://github.com/lishiping/SPDebugBar
 //github address//https://github.com/lishiping/SPFastPush
 //github address//https://github.com/lishiping/SPMacro
 //github address//https://github.com/lishiping/SafeData
+//github address//https://github.com/lishiping/SPCategory
 
 
 #import <Foundation/Foundation.h>

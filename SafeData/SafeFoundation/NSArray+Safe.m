@@ -303,8 +303,10 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_addObject:(id)anObject
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && anObject&&![anObject isKindOfClass:[NSNull class]]) {
-        [self addObject:anObject];
-        return YES;
+        @synchronized (self) {
+            [self addObject:anObject];
+            return YES;
+        }
     }
     return NO;
 }
@@ -312,8 +314,10 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_addObjectsFromArray:(NSArray*)otherArray
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && [otherArray isKindOfClass:[NSArray class]] && (otherArray.count > 0)) {
-        [self addObjectsFromArray:otherArray];
-        return YES;
+        @synchronized (self) {
+            [self addObjectsFromArray:otherArray];
+            return YES;
+        }
     }
     return NO;
 }
@@ -321,8 +325,10 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_insertObject:(id)anObject atIndex:(NSUInteger)index
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && anObject && index <= self.count) {
-        [self insertObject:anObject atIndex:index];
-        return YES;
+        @synchronized (self) {
+            [self insertObject:anObject atIndex:index];
+            return YES;
+        }
     }
     return NO;
 }
@@ -330,8 +336,10 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_insertObjects:(NSArray *)objects atIndexes:(NSIndexSet *)indexes
 {
     if (SP_IS_KINDOF(self, NSMutableArray) &&SP_IS_KINDOF(objects, NSArray)  && indexes) {
-        [self insertObjects:objects atIndexes:indexes];
-        return YES;
+        @synchronized (self) {
+            [self insertObjects:objects atIndexes:indexes];
+            return YES;
+        }
     }
     return NO;
 }
@@ -339,8 +347,10 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_exchangeObjectAtIndex:(NSUInteger)idx1 withObjectAtIndex:(NSUInteger)idx2
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && idx1 < self.count && idx2 < self.count && idx1!=idx2) {
-        [self exchangeObjectAtIndex:idx1 withObjectAtIndex:idx2];
-        return YES;
+        @synchronized (self) {
+            [self exchangeObjectAtIndex:idx1 withObjectAtIndex:idx2];
+            return YES;
+        }
     }
     return NO;
 }
@@ -348,8 +358,10 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && index < self.count && anObject) {
-        [self replaceObjectAtIndex:index withObject:anObject];
-        return YES;
+        @synchronized (self) {
+            [self replaceObjectAtIndex:index withObject:anObject];
+            return YES;
+        }
     }
     return NO;
 }
@@ -497,8 +509,11 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_removeLastObject
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && self.count > 0) {
-        [self removeLastObject];
-        return YES;
+        
+        @synchronized (self) {
+            [self removeLastObject];
+            return YES;
+        }
     }
     return NO;
 }
@@ -506,8 +521,11 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_removeObjectAtIndex:(NSUInteger)index
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && index < self.count) {
-        [self removeObjectAtIndex:index];
-        return YES;
+       
+        @synchronized (self) {
+            [self removeObjectAtIndex:index];
+            return YES;
+        }
     }
     return NO;
 }
@@ -515,8 +533,10 @@ return ([(NSString *)value func2]);\
 - (BOOL)safe_removeObject:(id)anObject
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && self.count>0 && anObject) {
-        [self removeObject:anObject];
-        return YES;
+        @synchronized (self) {
+            [self removeObject:anObject];
+            return YES;
+        }
     }
     return NO;
 }
@@ -525,8 +545,11 @@ return ([(NSString *)value func2]);\
 {
     NSUInteger index = range.location + range.length;
     if (SP_IS_KINDOF(self, NSMutableArray) &&self.count>0 && index<self.count && anObject) {
-        [self removeObject:anObject inRange:range];
-        return YES;
+       
+        @synchronized (self) {
+            [self removeObject:anObject inRange:range];
+            return YES;
+        }
     }
     return NO;
 }
@@ -534,8 +557,10 @@ return ([(NSString *)value func2]);\
 -(BOOL)safe_removeObjectsInArray:(NSArray *)otherArray
 {
     if (SP_IS_KINDOF(self, NSMutableArray) && SP_IS_KINDOF(otherArray, NSArray) &&self.count>0 && otherArray.count>0) {
-        [self removeObjectsInArray:otherArray];
-        return YES;
+        @synchronized (self) {
+            [self removeObjectsInArray:otherArray];
+            return YES;
+        }
     }
     return NO;
 }
@@ -544,8 +569,11 @@ return ([(NSString *)value func2]);\
 {
     NSUInteger index = range.location+range.length;
     if (SP_IS_KINDOF(self, NSMutableArray) && self.count>0 && index<self.count) {
-        [self removeObjectsInRange:range];
-        return YES;
+        
+        @synchronized (self) {
+            [self removeObjectsInRange:range];
+            return YES;
+        }
     }
     return NO;
 }

@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "NSDictionary+Safe.h"
+#import "NSArray+Safe.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+   
+    NSDictionary *dic =  @{@"one":@{@"two":@{@"three":@(3)}}};
+    
+    id ret = [dic safe_objectForKeyPath:@"one.two.three"];
+    
+    NSLog(@"打印%@",ret);
     return YES;
 }
 

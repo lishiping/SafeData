@@ -173,6 +173,58 @@ return ([(NSString *)_ret func2]);\
     return (NO);
 }
 
+- (NSString*_Nullable)safe_stringForKeyPath:(NSString *_Nonnull)keyPath
+{
+    NSString *ret = nil;
+    id object = [self safe_objectForKeyPath:keyPath];
+    
+    if ([object isKindOfClass:[NSString class]])
+    {
+        ret = (NSString *)object;
+    }
+    else if ([object isKindOfClass:[NSNumber class]])
+    {
+        ret = [object stringValue];
+    }
+    else if ([object isKindOfClass:[NSURL class]])
+    {
+        ret = [(NSURL *)object absoluteString];
+    }
+    else
+    {
+        ret = [object description];
+    }
+    
+    return ret;
+}
+
+- (id)safe_objectForKeyPath:(NSString *)keyPath
+{
+    if (SP_IS_KINDOF(keyPath, NSString) && SP_IS_KINDOF(self, NSDictionary)) {
+        
+        NSDictionary *dic = self;
+        NSArray *arr = [keyPath componentsSeparatedByString:@"."];
+        
+        for (int i = 0; i<arr.count; i++) {
+            NSString *str = arr[i];
+            @try {
+                dic = [dic objectForKey:str];
+            } @catch (NSException *exception) {
+                SP_LOG(@"KVC Set Value For Key error:%@", exception);
+            } @finally {
+            }
+        }
+        return dic;
+    }
+    else
+    {
+        ASSERT(keyPath);
+        SP_LOG(@"keyPath  is not NSString ,or self is not NSDictionary");
+        return nil;
+    }
+}
+
+
 // add anObject
 - (nullable NSDictionary *)safe_dictionaryBySetObject:(nullable id)anObject forKey:(nullable id)aKey
 {
@@ -226,14 +278,16 @@ return ([(NSString *)_ret func2]);\
     BOOL ret = NO;
     if (SP_IS_KINDOF(self, NSMutableDictionary) && aKey)
     {
-        if (anObject) {
-            [self setObject:anObject forKey:aKey];
+        @synchronized (self) {
+            if (anObject) {
+                [self setObject:anObject forKey:aKey];
+            }
+            else
+            {
+                [self removeObjectForKey:aKey];
+            }
+            ret = YES;
         }
-        else
-        {
-            [self removeObjectForKey:aKey];
-        }
-        ret = YES;
     }
     return (ret);
 }
@@ -257,9 +311,13 @@ return ([(NSString *)_ret func2]);\
 - (void)safe_addEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
 {
     if (SP_IS_KINDOF(self, NSMutableDictionary) && SP_IS_KINDOF(otherDictionary, NSDictionary) && otherDictionary.allKeys.count>0) {
-        [self addEntriesFromDictionary:otherDictionary];
+        @synchronized (self) {
+            [self addEntriesFromDictionary:otherDictionary];
+        }
     }
 }
+    
+    
 @end
 
 
