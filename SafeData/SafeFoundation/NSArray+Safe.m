@@ -22,7 +22,13 @@ return ([(NSString *)value func2]);\
 
 - (id)safe_objectAtIndex:(NSInteger)index
 {
-    if (SP_IS_KINDOF(self, NSArray) && index<self.count && index>=0) {
+    //加入断言是为了在debug下方便调试程序，如果有对象是空对象和类型问题，会停留在断言上，方便开发者查找问题，每个方法都加入，方便开发者直接找到调用地点
+    
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
+    if (SP_IS_KIND_OF(self, NSArray) && self.count>0 && index<self.count && index>=0) {
         return [self objectAtIndex:index];
     }
     return nil;
@@ -30,8 +36,12 @@ return ([(NSString *)value func2]);\
 
 - (NSString*)safe_stringAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
-    if ([obj isKindOfClass:[NSString class]]) {
+    if (SP_IS_KIND_OF(obj, NSString)) {
         return (obj);
     }
     return nil;
@@ -39,8 +49,12 @@ return ([(NSString *)value func2]);\
 
 - (NSDictionary*)safe_dictionaryAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
-    if ([obj isKindOfClass:[NSDictionary class]]) {
+    if (SP_IS_KIND_OF(obj, NSDictionary)) {
         return (obj);
     }
     return nil;
@@ -48,8 +62,12 @@ return ([(NSString *)value func2]);\
 
 - (NSArray*)safe_arrayAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
-    if ([obj isKindOfClass:[NSArray class]]) {
+    if (SP_IS_KIND_OF(obj, NSArray)) {
         return (obj);
     }
     return nil;
@@ -57,8 +75,12 @@ return ([(NSString *)value func2]);\
 
 - (UIImage*)safe_imageAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
-    if ([obj isKindOfClass:[UIImage class]]) {
+    if (SP_IS_KIND_OF(obj, UIImage)) {
         return (obj);
     }
     return nil;
@@ -66,8 +88,12 @@ return ([(NSString *)value func2]);\
 
 - (NSData*)safe_dataAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
-    if ([obj isKindOfClass:[NSData class]]) {
+    if (SP_IS_KIND_OF(obj, NSData)) {
         return (obj);
     }
     return nil;
@@ -75,6 +101,10 @@ return ([(NSString *)value func2]);\
 
 - (NSInteger)safe_integerAtIndex:(NSUInteger)index;
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
     SAFE_VALUE(obj, integerValue, integerValue);
     
@@ -83,6 +113,10 @@ return ([(NSString *)value func2]);\
 
 -(int)safe_intAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
     
     SAFE_VALUE(obj, intValue, intValue);
@@ -92,6 +126,10 @@ return ([(NSString *)value func2]);\
 
 -(long)safe_longAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
     
     SAFE_VALUE(obj, longValue, integerValue);
@@ -101,6 +139,10 @@ return ([(NSString *)value func2]);\
 
 -(long long)safe_longlongAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
     
     SAFE_VALUE(obj, longLongValue, longLongValue);
@@ -110,6 +152,10 @@ return ([(NSString *)value func2]);\
 
 -(double)safe_doubleAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
     
     SAFE_VALUE(obj, doubleValue, doubleValue);
@@ -119,6 +165,10 @@ return ([(NSString *)value func2]);\
 
 -(float)safe_floatAtIndex:(NSUInteger)index
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     id obj = [self safe_objectAtIndex:index];
     
     SAFE_VALUE(obj, floatValue, floatValue);
@@ -128,6 +178,10 @@ return ([(NSString *)value func2]);\
 
 - (id)safe_getFirstObject
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
+
     if (self.count>0) {
         return [self safe_objectAtIndex:0];
     }
@@ -136,6 +190,9 @@ return ([(NSString *)value func2]);\
 
 - (id)safe_getLastObject
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(self.count>0);
     
     if (self.count>0) {
         return [self safe_objectAtIndex:self.count-1];
@@ -145,51 +202,65 @@ return ([(NSString *)value func2]);\
 
 -(NSArray*)safe_valueForKey:(NSString *)key
 {
-    if (!SP_IS_KINDOF(self, NSArray) || key.length < 1)
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT_CLASS(key,NSString);
+    SP_ASSERT(self.count>0);
+
+    if (SP_IS_KIND_OF(self, NSArray) && key.length > 0)
     {
-        return (nil);
-    }
-    NSArray *tmp = [self valueForKey:key];
-    if (tmp&&[tmp isKindOfClass:[NSArray class]] &&tmp.count>0)
-    {
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:0];
-        for (id obj in tmp)
+        NSArray *tmp = [self valueForKey:key];
+        if (SP_IS_KIND_OF(tmp, NSArray) && tmp.count>0)
         {
-            if (obj && ![obj isKindOfClass:[NSNull class]])
+            NSMutableArray *arr = [NSMutableArray arrayWithCapacity:0];
+            for (id obj in tmp)
             {
-                [arr addObject:obj];
+                if (obj && !SP_IS_KIND_OF(obj, NSNull))
+                {
+                    [arr addObject:obj];
+                }
             }
+            return ([arr copy]);
         }
-        return ([arr copy]);
     }
     return nil;
 }
 
 -(NSArray*)safe_arrayByRemoveObject:(id)anObject
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(self.count>0);
+    SP_ASSERT(anObject);
+    
     NSArray *ret = self;
-    if (SP_IS_KINDOF(self, NSArray) && anObject && self.count>0) {
+    if (SP_IS_KIND_OF(self, NSArray) && anObject && self.count>0) {
         NSMutableArray *temp = [ret mutableCopy];
         [temp safe_removeObject:anObject];
-        ret = [NSArray arrayWithArray:temp];
+        ret = [temp copy];
     }
     return ret;
 }
 
 -(NSArray*)safe_arrayByRemoveObjects:(NSArray *)otherArray
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(otherArray);
+    SP_ASSERT(self.count>0);
+
     NSArray *ret = self;
-    if (SP_IS_KINDOF(self, NSArray) &&SP_IS_KINDOF(otherArray, NSArray)  && otherArray.count>0 && self.count>0)
+    if (SP_IS_KIND_OF(self, NSArray) &&SP_IS_KIND_OF(otherArray, NSArray)  && otherArray.count>0 && self.count>0)
     {
         NSMutableArray *temp = [ret mutableCopy];
         [temp safe_removeObjectsInArray:otherArray];
-        ret = [NSArray arrayWithArray:temp];
+        ret = [temp copy];
     }
     return ret;
 }
 
 -(NSArray*)safe_arrayByRemoveNullObjects
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(self.count>0);
+    
     NSArray *ret = self;
     if (self.count>0) {
         NSMutableArray *temp = [ret mutableCopy];
@@ -198,26 +269,42 @@ return ([(NSString *)value func2]);\
                 [temp safe_removeObject:obj];
             }
         }];
-        ret = [NSArray arrayWithArray:temp];
+        ret = [temp copy];
     }
     return ret;
 }
 
 -(NSArray*)safe_arrayByAddObject:(id)anObject
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(anObject);
+
     NSArray *ret = self;
-    if (SP_IS_KINDOF(self, NSArray) && anObject && self.count>0) {
+    
+    if (!ret) {
+        ret = [NSArray new];
+    }
+    
+    if (SP_IS_KIND_OF(self, NSArray) && anObject) {
         NSMutableArray *temp = [ret mutableCopy];
         [temp safe_addObject:anObject];
-        ret = [NSArray arrayWithArray:temp];
+        ret = [temp copy];
     }
     return ret;
 }
 
 -(NSArray*)safe_arrayByAddObjects:(NSArray *)array
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(array);
+    
     NSArray *ret = self;
-    if (SP_IS_KINDOF(self, NSArray) &&SP_IS_KINDOF(array, NSArray)  && array.count>0 && self.count>0)
+    
+    if (!ret) {
+        ret = [NSArray new];
+    }
+    
+    if (SP_IS_KIND_OF(self, NSArray) && SP_IS_KIND_OF(array, NSArray)  && array.count>0)
     {
         NSMutableArray *temp = [ret mutableCopy];
         [temp safe_addObjectsFromArray:array];
@@ -228,7 +315,11 @@ return ([(NSString *)value func2]);\
 
 -(BOOL)safe_containsObject:(id)anObject
 {
-    if (anObject&&self.count>0&&![anObject isKindOfClass:[NSNull class]]) {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(anObject);
+    SP_ASSERT(self.count>0);
+
+    if (anObject && self.count>0 && !SP_IS_KIND_OF(anObject, NSNull)) {
         return [self containsObject:anObject];
     }
     return NO;
@@ -236,20 +327,31 @@ return ([(NSString *)value func2]);\
 
 -(BOOL)safe_containsObjectsArray:(NSArray *)otherArray
 {
-    if (self.count>0 && otherArray.count>0&&SP_IS_KINDOF(self, NSArray)&&SP_IS_KINDOF(otherArray, NSArray)) {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(otherArray);
+    SP_ASSERT(self.count>0);
+
+    if (self.count>0 && otherArray.count>0&&SP_IS_KIND_OF(self, NSArray)&&SP_IS_KIND_OF(otherArray, NSArray)) {
         
         NSSet *set = [NSSet setWithArray:self];
         NSSet *set2 = [NSSet setWithArray:otherArray];
         return ([set2 isSubsetOfSet:set]);
-        
     }
     return NO;
-    
 }
 
 -(BOOL)safe_iSExistObject:(NSDictionary *)newDic longKey:(NSString *)longKey
 {
-    if (newDic && [newDic isKindOfClass:[NSDictionary class]] && longKey.length>0)
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(self.count>0);
+    SP_ASSERT_CLASS(newDic,NSDictionary);
+    SP_ASSERT_CLASS(longKey,NSString);
+
+    
+    if (SP_IS_KIND_OF(self, NSArray) &&
+        newDic &&
+        [newDic isKindOfClass:[NSDictionary class]] &&
+        longKey.length>0)
     {
         for (NSDictionary *obj1 in self)
         {
@@ -266,6 +368,11 @@ return ([(NSString *)value func2]);\
 
 -(BOOL)safe_iSExistObject:(NSDictionary *)newDic stringKey:(NSString *)stringKey
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(self.count>0);
+    SP_ASSERT_CLASS(newDic,NSDictionary);
+    SP_ASSERT_CLASS(stringKey,NSString);
+    
     if (newDic && [newDic isKindOfClass:[NSDictionary class]] && stringKey.length>0)
     {
         for (NSDictionary *obj1 in self) {
@@ -283,6 +390,9 @@ return ([(NSString *)value func2]);\
 
 -(NSData*)toJSONData
 {
+    SP_ASSERT_CLASS(self,NSArray);
+    SP_ASSERT(self.count>0);
+    
     NSData *ret = nil;
     NSError *err = nil;
     ret = [NSJSONSerialization dataWithJSONObject:self
@@ -302,72 +412,154 @@ return ([(NSString *)value func2]);\
 
 - (BOOL)safe_addObject:(id)anObject
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && anObject&&![anObject isKindOfClass:[NSNull class]]) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(anObject);
+
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && anObject && !SP_IS_KIND_OF(anObject, NSNull)) {
         @synchronized (self) {
-            [self addObject:anObject];
             return YES;
+            @try {
+                [self addObject:anObject];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 - (BOOL)safe_addObjectsFromArray:(NSArray*)otherArray
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && [otherArray isKindOfClass:[NSArray class]] && (otherArray.count > 0)) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT_CLASS(otherArray,NSArray);
+    
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && SP_IS_KIND_OF(otherArray, NSArray) && (otherArray.count > 0)) {
         @synchronized (self) {
-            [self addObjectsFromArray:otherArray];
-            return YES;
+            @try {
+                [self addObjectsFromArray:otherArray];
+                ret = YES;
+
+            } @catch (NSException *exception) {
+                SP_LOG(@"error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 - (BOOL)safe_insertObject:(id)anObject atIndex:(NSUInteger)index
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && anObject && index <= self.count) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(anObject);
+    SP_ASSERT(index>=0);
+    
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && anObject && index <= self.count) {
         @synchronized (self) {
-            [self insertObject:anObject atIndex:index];
-            return YES;
+            @try {
+                [self insertObject:anObject atIndex:index];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 - (BOOL)safe_insertObjects:(NSArray *)objects atIndexes:(NSIndexSet *)indexes
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) &&SP_IS_KINDOF(objects, NSArray)  && indexes) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT_CLASS(objects,NSArray);
+    SP_ASSERT_CLASS(indexes,NSIndexSet);
+    
+    BOOL ret = NO;
+    
+    if (SP_IS_KIND_OF(self, NSMutableArray) && SP_IS_KIND_OF(objects, NSArray)  && indexes) {
         @synchronized (self) {
-            [self insertObjects:objects atIndexes:indexes];
-            return YES;
+            @try {
+                [self insertObjects:objects atIndexes:indexes];
+                ret = YES;
+
+            } @catch (NSException *exception) {
+                SP_LOG(@"error:%@", exception);
+                ret = NO;
+
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 - (BOOL)safe_exchangeObjectAtIndex:(NSUInteger)idx1 withObjectAtIndex:(NSUInteger)idx2
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && idx1 < self.count && idx2 < self.count && idx1!=idx2) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(self.count>0);
+    SP_ASSERT(idx1>=0);
+    SP_ASSERT(idx2>=0);
+    
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && idx1 < self.count && idx2 < self.count && idx1!=idx2) {
         @synchronized (self) {
-            [self exchangeObjectAtIndex:idx1 withObjectAtIndex:idx2];
-            return YES;
+            @try {
+                [self exchangeObjectAtIndex:idx1 withObjectAtIndex:idx2];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 - (BOOL)safe_replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && index < self.count && anObject) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(self.count>0);
+    SP_ASSERT(index>=0);
+    SP_ASSERT(anObject);
+
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && index < self.count && anObject) {
         @synchronized (self) {
-            [self replaceObjectAtIndex:index withObject:anObject];
-            return YES;
+            @try {
+                [self replaceObjectAtIndex:index withObject:anObject];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
+
         }
     }
-    return NO;
+    return ret;
 }
 
 -(BOOL)safe_addObjectsByRemoveRepeatWithNewArray:(NSArray<NSDictionary *> *)newArray longKey:(NSString *)longKey
 {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT_CLASS(newArray,NSArray);
+    SP_ASSERT_CLASS(longKey,NSString);
+
+    
     for (NSDictionary *dic in newArray) {
         if (![dic isKindOfClass:[NSDictionary class]]) {
             return NO;
@@ -389,7 +581,7 @@ return ([(NSString *)value func2]);\
         [newArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj2, NSUInteger idx, BOOL * _Nonnull stop) {
             long newid  = [obj2 safe_longForKey:longKey];
             if (newid == oldid) {
-                [self removeObject:obj1];
+                [self safe_removeObject:obj1];
             }
         }];
     }];
@@ -400,6 +592,10 @@ return ([(NSString *)value func2]);\
 
 -(BOOL)safe_addObjectsByRemoveRepeatWithNewArray:(NSArray<NSDictionary *> *)newArray stringKey:(NSString *)stringKey
 {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT_CLASS(newArray,NSArray);
+    SP_ASSERT_CLASS(stringKey,NSString);
+    
     for (NSDictionary *dic in newArray) {
         if (![dic isKindOfClass:[NSDictionary class]]) {
             return NO;
@@ -420,7 +616,7 @@ return ([(NSString *)value func2]);\
         [newArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj2, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *newStr  = [obj2 safe_stringForKey:stringKey];
             if ([newStr isEqualToString:oldStr]) {
-                [self removeObject:obj1];
+                [self safe_removeObject:obj1];
             }
         }];
     }];
@@ -431,6 +627,10 @@ return ([(NSString *)value func2]);\
 
 -(BOOL)safe_insertObjectsAtHeadByRemoveRepeatWithNewArray:(NSArray<NSDictionary *> *)newArray longKey:(NSString *)longKey
 {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT_CLASS(newArray,NSArray);
+    SP_ASSERT_CLASS(longKey,NSString);
+    
     for (NSDictionary *dic in newArray) {
         if (![dic isKindOfClass:[NSDictionary class]]) {
             return NO;
@@ -452,7 +652,7 @@ return ([(NSString *)value func2]);\
         [newArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj2, NSUInteger idx, BOOL * _Nonnull stop) {
             long newid  = [obj2 safe_longForKey:longKey];
             if (newid == oldid) {
-                [self removeObject:obj1];
+                [self safe_removeObject:obj1];
             }
         }];
     }];
@@ -469,6 +669,10 @@ return ([(NSString *)value func2]);\
 
 -(BOOL)safe_insertObjectsAtHeadByRemoveRepeatWithNewArray:(NSArray<NSDictionary *> *)newArray stringKey:(NSString *)stringKey
 {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT_CLASS(newArray,NSArray);
+    SP_ASSERT_CLASS(stringKey,NSString);
+    
     for (NSDictionary *dic in newArray) {
         if (![dic isKindOfClass:[NSDictionary class]]) {
             return NO;
@@ -489,7 +693,7 @@ return ([(NSString *)value func2]);\
         [newArray enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj2, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *newStr  = [obj2 safe_stringForKey:stringKey];
             if ([newStr isEqualToString:oldStr]) {
-                [self removeObject:obj1];
+                [self safe_removeObject:obj1];
             }
         }];
     }];
@@ -508,74 +712,141 @@ return ([(NSString *)value func2]);\
 #pragma mark - safe_remove
 - (BOOL)safe_removeLastObject
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && self.count > 0) {
-        
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(self.count>0);
+    
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && self.count > 0) {
         @synchronized (self) {
-            [self removeLastObject];
-            return YES;
+            @try {
+                [self removeLastObject];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"remove error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 - (BOOL)safe_removeObjectAtIndex:(NSUInteger)index
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && index < self.count) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(self.count>0);
+    SP_ASSERT(index>=0);
+    
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && index < self.count) {
        
         @synchronized (self) {
-            [self removeObjectAtIndex:index];
-            return YES;
+            @try {
+                [self removeObjectAtIndex:index];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"remove error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 - (BOOL)safe_removeObject:(id)anObject
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && self.count>0 && anObject) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(anObject);
+    SP_ASSERT(self.count>0);
+
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && self.count>0 && anObject) {
         @synchronized (self) {
-            [self removeObject:anObject];
-            return YES;
+            @try {
+                [self removeObject:anObject];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"remove error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 - (BOOL)safe_removeObject:(id)anObject inRange:(NSRange)range
 {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(self.count>0);
+
+    BOOL ret = NO;
     NSUInteger index = range.location + range.length;
-    if (SP_IS_KINDOF(self, NSMutableArray) &&self.count>0 && index<self.count && anObject) {
+    if (SP_IS_KIND_OF(self, NSMutableArray) &&self.count>0 && index<self.count && anObject) {
        
         @synchronized (self) {
-            [self removeObject:anObject inRange:range];
-            return YES;
+            @try {
+                [self removeObject:anObject inRange:range];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"remove error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 -(BOOL)safe_removeObjectsInArray:(NSArray *)otherArray
 {
-    if (SP_IS_KINDOF(self, NSMutableArray) && SP_IS_KINDOF(otherArray, NSArray) &&self.count>0 && otherArray.count>0) {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT_CLASS(otherArray,NSArray);
+    SP_ASSERT(self.count>0);
+
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableArray) && SP_IS_KIND_OF(otherArray, NSArray) &&self.count>0 && otherArray.count>0) {
         @synchronized (self) {
-            [self removeObjectsInArray:otherArray];
-            return YES;
+            @try {
+                [self removeObjectsInArray:otherArray];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"remove error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 -(BOOL)safe_removeObjectsInRange:(NSRange)range
 {
+    SP_ASSERT_CLASS(self,NSMutableArray);
+    SP_ASSERT(self.count>0);
+
+    BOOL ret = NO;
+
     NSUInteger index = range.location+range.length;
-    if (SP_IS_KINDOF(self, NSMutableArray) && self.count>0 && index<self.count) {
+    if (SP_IS_KIND_OF(self, NSMutableArray) && self.count>0 && index<self.count) {
         
         @synchronized (self) {
-            [self removeObjectsInRange:range];
-            return YES;
+            @try {
+                [self removeObjectsInRange:range];
+                ret = YES;
+            } @catch (NSException *exception) {
+                SP_LOG(@"remove error:%@", exception);
+                ret = NO;
+            } @finally {
+            }
         }
     }
-    return NO;
+    return ret;
 }
 
 

@@ -5,8 +5,8 @@
 //  Copyright © 2016年 lishiping. All rights reserved.
 //
 
-//If you feel this open source library is of great help to you, please open the URL to the point of a great, great encouragement your recognition to the author, the author will release better open source library for you again
-//如果您感觉本开源库对您很有帮助，请打开URL给作者点个赞，您的认可给作者极大的鼓励，作者还会再发布更好的开源库给大家
+//If you think this open source library is of great help to you, please open the URL to click the Star,your approbation can encourage me, the author will publish the better open source library for guys again
+//如果您认为本开源库对您很有帮助，请打开URL给作者点个赞，您的认可给作者极大的鼓励，作者还会发布更好的开源库给大家
 
 //github address//https://github.com/lishiping/SPWebView
 //github address//https://github.com/lishiping/SPDebugBar
@@ -17,20 +17,28 @@
 
 
 
-#define SP_IS_KINDOF(obj, cls)  [(obj) isKindOfClass:[cls class]]
+#define SP_IS_KIND_OF(obj, cls) [(obj) isKindOfClass:[cls class]]
 
 
 #if DEBUG
 
-#define ASSERT(x)               assert((x))
-#define SP_LOG(...) NSLog(__VA_ARGS__);
+#define SP_LOG(...) NSLog(__VA_ARGS__)
+
+#define SP_ASSERT(obj)               assert((obj)) //断言实例对象
+
+#define SP_ASSERT_CLASS(obj, cls)  SP_ASSERT((obj) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型
+
 
 #else
 
-#define ASSERT(x)
-#define SP_LOG(...) 
+#define SP_LOG(...)
+
+#define SP_ASSERT(obj)
+
+#define SP_ASSERT_CLASS(obj, cls)
 
 #endif
+
 
 
 #import <Foundation/Foundation.h>
@@ -39,42 +47,45 @@
 
 /********safe get method***/
 
+// get object
+- (nullable id)safe_objectForKey:(id _Nonnull)key;
+
 // get string or nil
-- (nullable NSString *)safe_stringForKey:(nullable id)key;
+- (nullable NSString *)safe_stringForKey:(id _Nonnull)key;
 
 // get array or nil
-- (nullable NSArray *)safe_arrayForKey:(nullable id)key;
+- (nullable NSArray *)safe_arrayForKey:(id _Nonnull)key;
 
 // get dictionary or nil
-- (nullable NSDictionary *)safe_dictionaryForKey:(nullable id)key;
+- (nullable NSDictionary *)safe_dictionaryForKey:(id _Nonnull)key;
 
 // get number or nil
-- (nullable NSNumber *)safe_numberForKey:(nullable id)key;
+- (nullable NSNumber *)safe_numberForKey:(id _Nonnull)key;
 
 // get data or nil
-- (nullable NSData *)safe_dataForKey:(nullable id)key;
+- (nullable NSData *)safe_dataForKey:(id _Nonnull)key;
 
 //get NSInteger or nil
-- (NSInteger)safe_integerForKey:(nullable id)key;
+- (NSInteger)safe_integerForKey:(id _Nonnull)key;
 
 //OC type transform C type
 // transform NSNumber or NSString to int
-- (int)safe_intForKey:(nullable id)key;
+- (int)safe_intForKey:(id _Nonnull)key;
 
 // transform NSNumber or NSString to long
-- (long)safe_longForKey:(nullable id)key;
+- (long)safe_longForKey:(id _Nonnull)key;
 
 // transform NSNumber or NSString to long long
-- (long long)safe_longLongForKey:(nullable id)key;
+- (long long)safe_longLongForKey:(id _Nonnull)key;
 
 // transform NSNumber or NSString to double
-- (double)safe_doubleForKey:(nullable id)key;
+- (double)safe_doubleForKey:(id _Nonnull)key;
 
 // transform NSNumber or NSString to float
-- (float)safe_floatForKey:(nullable id)key;
+- (float)safe_floatForKey:(id _Nonnull)key;
 
 // transform NSNumber or NSString to BOOL
-- (BOOL)safe_boolForKey:(nullable id)key;
+- (BOOL)safe_boolForKey:(id _Nonnull)key;
 
 
 /**
@@ -100,7 +111,7 @@
     
 //if anObject is nil ,mean remove value for aKey
 //anObject为空则等于移除键值
-- (nullable NSDictionary *)safe_dictionaryBySetObject:(nullable id)anObject forKey:(nullable id)aKey;
+- (nullable NSDictionary *)safe_dictionaryBySetObject:(nullable id)anObject forKey:(id _Nonnull)aKey;
 
 //safe add Entries for NSDictionary
 - (nullable NSDictionary *)safe_dictionaryAddEntriesFromDictionary:(nullable NSDictionary *)otherDictionary;

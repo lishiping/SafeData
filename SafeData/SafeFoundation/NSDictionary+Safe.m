@@ -21,172 +21,190 @@ return ([(NSString *)_ret func2]);\
 
 @implementation NSDictionary (Safe)
 
-
-- (nullable NSString *)safe_stringForKey:(nullable id)key
+- (nullable id)safe_objectForKey:(id)key
 {
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
+    if (SP_IS_KIND_OF(self, NSDictionary) && key) {
+        return [self objectForKey:key];
+    }
+    return nil;
+}
+
+- (nullable NSString *)safe_stringForKey:(id)key
+{
+    //为什么要每个里面都加断言呢，原因是如果只在上一个safe_objectForKey里面加断言不能马上知道到底是哪个方法调用的，在每个里面加断言可以离开知道是调用的哪个方法
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
     NSString *ret=nil;
     
-    if (SP_IS_KINDOF(self, NSDictionary) && key)
+    id object = [self safe_objectForKey:key];
+    
+    if (SP_IS_KIND_OF(object, NSString))
     {
-        id object = [self objectForKey:key];
-        
-        if ([object isKindOfClass:[NSString class]])
-        {
-            ret = (NSString *)object;
-        }
-        else if ([object isKindOfClass:[NSNumber class]])
-        {
-            ret = [object stringValue];
-        }
-        else if ([object isKindOfClass:[NSURL class]])
-        {
-            ret = [(NSURL *)object absoluteString];
-        }
-        else
-        {
-            ret = [object description];
-        }
+        ret = (NSString *)object;
     }
-    return (ret);
+    else if (SP_IS_KIND_OF(object, NSNumber))
+    {
+        ret = [object stringValue];
+    }
+    else if (SP_IS_KIND_OF(object, NSURL))
+    {
+        ret = [(NSURL *)object absoluteString];
+    }
+    else
+    {
+        ret = [object description];
+    }
     
+    return (ret);
 }
 
-- (nullable NSArray *)safe_arrayForKey:(nullable id)key
+- (nullable NSArray *)safe_arrayForKey:(id)key
 {
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
     NSArray *ret = nil;
-    if (SP_IS_KINDOF(self, NSDictionary) && key) {
-        id object = [self objectForKey:key];
-        if (object&&[object isKindOfClass:[NSArray class]])
-        {
-            ret = object;
-        }
+    
+    id object = [self safe_objectForKey:key];
+    if (object && SP_IS_KIND_OF(object, NSArray))
+    {
+        ret = object;
     }
     
     return (ret);
 }
 
-- (nullable NSDictionary *)safe_dictionaryForKey:(nullable id)key
+- (nullable NSDictionary *)safe_dictionaryForKey:(id)key
 {
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
     NSDictionary *ret = nil;
-    if (SP_IS_KINDOF(self, NSDictionary) && key) {
-        id object = [self objectForKey:key];
-        if (object&&[object isKindOfClass:[NSDictionary class]])
-        {
-            ret = object;
-        }
+    
+    id object = [self safe_objectForKey:key];
+    if (object && SP_IS_KIND_OF(object, NSDictionary))
+    {
+        ret = object;
     }
+    
     return (ret);
 }
 
-- (nullable NSNumber *)safe_numberForKey:(nullable id)key
+- (nullable NSNumber *)safe_numberForKey:(id)key
 {
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
     NSNumber *ret = nil;
-    if (SP_IS_KINDOF(self, NSDictionary) && key) {
-        id object= [self objectForKey:key];
-        if (object&&[object isKindOfClass:[NSNumber class]])
-        {
-            ret = object;
-        }
+    
+    id object= [self safe_objectForKey:key];
+    if (object&&SP_IS_KIND_OF(object, NSNumber))
+    {
+        ret = object;
     }
     
     return (ret);
 }
 
-- (nullable NSData *)safe_dataForKey:(nullable id)key
+- (nullable NSData *)safe_dataForKey:(id)key
 {
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
     NSData *ret = nil;
-    if (SP_IS_KINDOF(self, NSDictionary) && key) {
-        id object= [self objectForKey:key];
-        if (object&&[object isKindOfClass:[NSData class]])
-        {
-            ret = object;
-        }
+    id object= [self safe_objectForKey:key];
+    if (object&&SP_IS_KIND_OF(object, NSData))
+    {
+        ret = object;
     }
     
     return (ret);
 }
 
-- (int)safe_intForKey:(nullable id)key
+- (NSInteger)safe_integerForKey:(id)key
 {
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
     
-    if (!key) {
-        return 0;
-    }
+    VALUE_FOR_KEY(key, integerValue,integerValue);
+    return (0);
+}
+
+- (int)safe_intForKey:(id)key
+{
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
     
     VALUE_FOR_KEY(key, intValue, intValue);
     return (0);
 }
 
-- (long)safe_longForKey:(nullable id)key
+- (long)safe_longForKey:(id)key
 {
-    if (!key) {
-        return 0.0f;
-    }
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
     
     VALUE_FOR_KEY(key, longValue, integerValue);
-    return (0.0f);
-}
-
-- (long long)safe_longLongForKey:(nullable id)key
-{
-    if (!key) {
-        return 0.0f;
-    }
-    VALUE_FOR_KEY(key, longLongValue,longLongValue);
-    return (0.0f);
-}
-
-- (double)safe_doubleForKey:(nullable id)key
-{
-    if (!key) {
-        return 0.0f;
-    }
-    VALUE_FOR_KEY(key, doubleValue,doubleValue);
-    return (0.0);
-}
-
-- (NSInteger)safe_integerForKey:(nullable id)key
-{
-    if (!key) {
-        return 0;
-    }
-    VALUE_FOR_KEY(key, integerValue,integerValue);
     return (0);
 }
 
-- (float)safe_floatForKey:(nullable id)key
+- (long long)safe_longLongForKey:(id)key
 {
-    if (!key) {
-        return 0.0f;
-    }
-    VALUE_FOR_KEY(key, floatValue,floatValue);
-    return (0.0);
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
+    VALUE_FOR_KEY(key, longLongValue,longLongValue);
+    return (0);
 }
 
-- (BOOL)safe_boolForKey:(nullable id)key
+- (double)safe_doubleForKey:(id)key
 {
-    if (!key) {
-        return NO;
-    }
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
+    VALUE_FOR_KEY(key, doubleValue,doubleValue);
+    return (0.0f);
+}
+
+- (float)safe_floatForKey:(id)key
+{
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
+    VALUE_FOR_KEY(key, floatValue,floatValue);
+    return (0.0f);
+}
+
+- (BOOL)safe_boolForKey:(id)key
+{
+    SP_ASSERT(key);
+    SP_ASSERT_CLASS(self,NSDictionary);
     
     VALUE_FOR_KEY(key, boolValue,boolValue);
     return (NO);
 }
 
-- (NSString*_Nullable)safe_stringForKeyPath:(NSString *_Nonnull)keyPath
+- (NSString*_Nullable)safe_stringForKeyPath:(NSString *)keyPath
 {
+    SP_ASSERT_CLASS(keyPath,NSString);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
     NSString *ret = nil;
     id object = [self safe_objectForKeyPath:keyPath];
     
-    if ([object isKindOfClass:[NSString class]])
+    if (SP_IS_KIND_OF(object, NSString))
     {
         ret = (NSString *)object;
     }
-    else if ([object isKindOfClass:[NSNumber class]])
+    else if (SP_IS_KIND_OF(object, NSNumber))
     {
         ret = [object stringValue];
     }
-    else if ([object isKindOfClass:[NSURL class]])
+    else if (SP_IS_KIND_OF(object, NSURL))
     {
         ret = [(NSURL *)object absoluteString];
     }
@@ -200,17 +218,22 @@ return ([(NSString *)_ret func2]);\
 
 - (id)safe_objectForKeyPath:(NSString *)keyPath
 {
-    if (SP_IS_KINDOF(keyPath, NSString) && SP_IS_KINDOF(self, NSDictionary)) {
+    SP_ASSERT_CLASS(keyPath,NSString);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
+    if (SP_IS_KIND_OF(keyPath, NSString) && SP_IS_KIND_OF(self, NSDictionary)) {
         
         NSDictionary *dic = self;
-        NSArray *arr = [keyPath componentsSeparatedByString:@"."];
+        
+        NSString *keyPathtemp = [keyPath stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSArray *arr = [keyPathtemp componentsSeparatedByString:@"."];
         
         for (int i = 0; i<arr.count; i++) {
             NSString *str = arr[i];
             @try {
                 dic = [dic objectForKey:str];
             } @catch (NSException *exception) {
-                SP_LOG(@"KVC Set Value For Key error:%@", exception);
+                SP_LOG(@"safe_objectForKeyPath error:%@", exception);
             } @finally {
             }
         }
@@ -218,7 +241,6 @@ return ([(NSString *)_ret func2]);\
     }
     else
     {
-        ASSERT(keyPath);
         SP_LOG(@"keyPath  is not NSString ,or self is not NSDictionary");
         return nil;
     }
@@ -226,30 +248,46 @@ return ([(NSString *)_ret func2]);\
 
 
 // add anObject
-- (nullable NSDictionary *)safe_dictionaryBySetObject:(nullable id)anObject forKey:(nullable id)aKey
+- (nullable NSDictionary *)safe_dictionaryBySetObject:(id)anObject forKey:(id)aKey
 {
-    if (aKey) {
-        NSMutableDictionary *mDict = [self mutableCopy];
-        [mDict safe_setObject:anObject forKey:aKey];
-        return ([mDict copy]);
+    SP_ASSERT_CLASS(aKey,NSString);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
+    NSDictionary *ret = self;
+    
+    if (!ret) {
+        ret = [NSDictionary new];
     }
+    
+    NSMutableDictionary *mDict = [ret mutableCopy];
+    [mDict safe_setObject:anObject forKey:aKey];
+    return ([mDict copy]);
     
     return self;
 }
 
 - (nullable NSDictionary *)safe_dictionaryAddEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
 {
-    if (SP_IS_KINDOF(self, NSDictionary)) {
-        NSMutableDictionary *dic = [self mutableCopy];
-        [dic safe_addEntriesFromDictionary:otherDictionary];
-        return ([dic copy]);
+    SP_ASSERT_CLASS(otherDictionary,NSDictionary);
+    SP_ASSERT_CLASS(self,NSDictionary);
+    
+    NSDictionary *ret = self;
+    
+    if (!ret) {
+        ret = [NSDictionary new];
     }
+    
+    NSMutableDictionary *dic = [ret mutableCopy];
+    [dic safe_addEntriesFromDictionary:otherDictionary];
+    return ([dic copy]);
     
     return self;
 }
 
 - (nullable NSData *)toJSONData
 {
+    SP_ASSERT_CLASS(self,NSDictionary);
+
     NSData *ret = nil;
     NSError *err = nil;
     ret = [NSJSONSerialization dataWithJSONObject:self
@@ -275,18 +313,22 @@ return ([(NSString *)_ret func2]);\
 
 - (BOOL)safe_setObject:(nullable ObjectType)anObject forKey:(nullable KeyType)aKey;
 {
+    SP_ASSERT_CLASS(self,NSMutableDictionary);
+    SP_ASSERT(aKey);
+    
     BOOL ret = NO;
-    if (SP_IS_KINDOF(self, NSMutableDictionary) && aKey)
+    
+    if (SP_IS_KIND_OF(self, NSMutableDictionary) && aKey)
     {
         @synchronized (self) {
             if (anObject) {
                 [self setObject:anObject forKey:aKey];
+                ret = YES;
             }
             else
             {
                 [self removeObjectForKey:aKey];
             }
-            ret = YES;
         }
     }
     return (ret);
@@ -294,11 +336,15 @@ return ([(NSString *)_ret func2]);\
 
 - (BOOL)safe_setString:(nullable NSString *)anObject forKey:(nullable KeyType)aKey;
 {
-    if (SP_IS_KINDOF(anObject, NSString)) {
+    SP_ASSERT_CLASS(self,NSMutableDictionary);
+    SP_ASSERT_CLASS(anObject, NSString);
+    SP_ASSERT(aKey);
+    
+    if (SP_IS_KIND_OF(anObject, NSString)) {
         
         return [self safe_setObject:anObject forKey:aKey];
     }
-    else if(SP_IS_KINDOF(anObject, NSNumber))
+    else if(SP_IS_KIND_OF(anObject, NSNumber))
     {
         return [self safe_setObject:[(NSNumber*)anObject stringValue] forKey:aKey];
     }
@@ -310,14 +356,17 @@ return ([(NSString *)_ret func2]);\
 
 - (void)safe_addEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
 {
-    if (SP_IS_KINDOF(self, NSMutableDictionary) && SP_IS_KINDOF(otherDictionary, NSDictionary) && otherDictionary.allKeys.count>0) {
+    SP_ASSERT_CLASS(self,NSMutableDictionary);
+    SP_ASSERT_CLASS(otherDictionary,NSDictionary);
+    
+    if (SP_IS_KIND_OF(self, NSMutableDictionary) && SP_IS_KIND_OF(otherDictionary, NSDictionary) && otherDictionary.allKeys.count>0) {
         @synchronized (self) {
             [self addEntriesFromDictionary:otherDictionary];
         }
     }
 }
-    
-    
+
+
 @end
 
 
