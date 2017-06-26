@@ -1,5 +1,5 @@
 //
-//  NSDictionary+Safe.h
+//  NSDictionary+SPSafe.h
 //  e-mail:83118274@qq.com
 //  Created by lishiping on 16/10/19.
 //  Copyright © 2016年 lishiping. All rights reserved.
