@@ -17,7 +17,7 @@ return ([(NSString *)_ret func2]);\
 }\
 }
 
-#import "NSDictionary+Safe.h"
+#import "NSDictionary+SPSafe.h"
 
 @implementation NSDictionary (Safe)
 
@@ -305,11 +305,11 @@ return ([(NSString *)_ret func2]);\
 
 
 
-#pragma mark - NSMutableDictionary + Safe
+#pragma mark - NSMutableDictionary + SPSafe
 #define KeyType id
 #define ObjectType id
 
-@implementation NSMutableDictionary (Safe)
+@implementation NSMutableDictionary (SPSafe)
 
 - (BOOL)safe_setObject:(nullable ObjectType)anObject forKey:(nullable KeyType)aKey;
 {

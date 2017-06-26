@@ -13,8 +13,8 @@
 		E15C66731E1516B4002A1516 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E15C66711E1516B4002A1516 /* Main.storyboard */; };
 		E15C66751E1516B4002A1516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E15C66741E1516B4002A1516 /* Assets.xcassets */; };
 		E15C66781E1516B4002A1516 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E15C66761E1516B4002A1516 /* LaunchScreen.storyboard */; };
-		E15C66841E15174B002A1516 /* NSArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = E15C66811E15174B002A1516 /* NSArray+Safe.m */; };
-		E15C66851E15174B002A1516 /* NSDictionary+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = E15C66831E15174B002A1516 /* NSDictionary+Safe.m */; };
+		E15C66841E15174B002A1516 /* NSArray+SPSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = E15C66811E15174B002A1516 /* NSArray+SPSafe.m */; };
+		E15C66851E15174B002A1516 /* NSDictionary+SPSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = E15C66831E15174B002A1516 /* NSDictionary+SPSafe.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,10 +28,10 @@
 		E15C66741E1516B4002A1516 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E15C66771E1516B4002A1516 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E15C66791E1516B4002A1516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E15C66801E15174B002A1516 /* NSArray+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Safe.h"; sourceTree = "<group>"; };
-		E15C66811E15174B002A1516 /* NSArray+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Safe.m"; sourceTree = "<group>"; };
-		E15C66821E15174B002A1516 /* NSDictionary+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Safe.h"; sourceTree = "<group>"; };
-		E15C66831E15174B002A1516 /* NSDictionary+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Safe.m"; sourceTree = "<group>"; };
+		E15C66801E15174B002A1516 /* NSArray+SPSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+SPSafe.h"; sourceTree = "<group>"; };
+		E15C66811E15174B002A1516 /* NSArray+SPSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+SPSafe.m"; sourceTree = "<group>"; };
+		E15C66821E15174B002A1516 /* NSDictionary+SPSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SPSafe.h"; sourceTree = "<group>"; };
+		E15C66831E15174B002A1516 /* NSDictionary+SPSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+SPSafe.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +89,10 @@
 		E15C667F1E15174B002A1516 /* SafeFoundation */ = {
 			isa = PBXGroup;
 			children = (
-				E15C66801E15174B002A1516 /* NSArray+Safe.h */,
-				E15C66811E15174B002A1516 /* NSArray+Safe.m */,
-				E15C66821E15174B002A1516 /* NSDictionary+Safe.h */,
-				E15C66831E15174B002A1516 /* NSDictionary+Safe.m */,
+				E15C66801E15174B002A1516 /* NSArray+SPSafe.h */,
+				E15C66811E15174B002A1516 /* NSArray+SPSafe.m */,
+				E15C66821E15174B002A1516 /* NSDictionary+SPSafe.h */,
+				E15C66831E15174B002A1516 /* NSDictionary+SPSafe.m */,
 			);
 			path = SafeFoundation;
 			sourceTree = "<group>";
@@ -170,8 +170,8 @@
 				E15C66701E1516B4002A1516 /* ViewController.m in Sources */,
 				E15C666D1E1516B4002A1516 /* AppDelegate.m in Sources */,
 				E15C666A1E1516B4002A1516 /* main.m in Sources */,
-				E15C66851E15174B002A1516 /* NSDictionary+Safe.m in Sources */,
-				E15C66841E15174B002A1516 /* NSArray+Safe.m in Sources */,
+				E15C66851E15174B002A1516 /* NSDictionary+SPSafe.m in Sources */,
+				E15C66841E15174B002A1516 /* NSArray+SPSafe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

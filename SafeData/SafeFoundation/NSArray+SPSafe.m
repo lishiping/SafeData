@@ -16,9 +16,9 @@ return ([(NSString *)value func2]);\
 
 
 
-#import "NSArray+Safe.h"
+#import "NSArray+SPSafe.h"
 
-@implementation NSArray (Safe)
+@implementation NSArray (SPSafe)
 
 - (id)safe_objectAtIndex:(NSInteger)index
 {
@@ -408,7 +408,7 @@ return ([(NSString *)value func2]);\
 
 @end
 
-@implementation NSMutableArray (Safe)
+@implementation NSMutableArray (SPSafe)
 
 - (BOOL)safe_addObject:(id)anObject
 {

@@ -18,9 +18,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "NSDictionary+Safe.h"
+#import "NSDictionary+SPSafe.h"
 
-@interface NSArray (Safe)
+@interface NSArray (SPSafe)
 
 /********safe get method***/
 
@@ -130,7 +130,7 @@
 
 @end
 
-@interface NSMutableArray (Safe)
+@interface NSMutableArray (SPSafe)
 
 /********safe add method***/
 

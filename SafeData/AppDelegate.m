@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "NSDictionary+Safe.h"
-#import "NSArray+Safe.h"
+#import "NSDictionary+SPSafe.h"
+#import "NSArray+SPSafe.h"
 
 @interface AppDelegate ()
 

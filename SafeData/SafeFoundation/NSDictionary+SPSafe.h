@@ -43,7 +43,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDictionary (Safe)
+@interface NSDictionary (SPSafe)
 
 /********safe get method***/
 
@@ -126,7 +126,7 @@
 
 #pragma mark - NSMutableDictionary + Safe
 
-@interface NSMutableDictionary<KeyType, ObjectType> (Safe)
+@interface NSMutableDictionary<KeyType, ObjectType> (SPSafe)
 
 //safe set object
 - (BOOL)safe_setObject:(nullable ObjectType)anObject forKey:(nullable KeyType)aKey;
