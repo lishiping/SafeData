@@ -101,7 +101,7 @@
  @param longKey 唯一字段
  @return 是否存在
  */
-- (BOOL)safe_iSExistObject:(NSDictionary*)newDic longKey:(NSString*)longKey;
+- (BOOL)safe_isExistObject:(NSDictionary*)newDic longKey:(NSString*)longKey;
 
 /**
  1. Determine whether there is a same element in an array model
@@ -122,7 +122,7 @@
  @param stringKey 唯一字段
  @return 是否存在
  */
-- (BOOL)safe_iSExistObject:(NSDictionary*)newDic stringKey:(NSString*)stringKey;
+- (BOOL)safe_isExistObject:(NSDictionary*)newDic stringKey:(NSString*)stringKey;
 
 /****get JSON  Data method***/
 

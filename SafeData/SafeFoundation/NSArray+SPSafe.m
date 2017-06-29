@@ -340,7 +340,7 @@ return ([(NSString *)value func2]);\
     return NO;
 }
 
--(BOOL)safe_iSExistObject:(NSDictionary *)newDic longKey:(NSString *)longKey
+-(BOOL)safe_isExistObject:(NSDictionary *)newDic longKey:(NSString *)longKey
 {
     SP_ASSERT_CLASS(self,NSArray);
     SP_ASSERT(self.count>0);
@@ -366,7 +366,7 @@ return ([(NSString *)value func2]);\
     return NO;
 }
 
--(BOOL)safe_iSExistObject:(NSDictionary *)newDic stringKey:(NSString *)stringKey
+-(BOOL)safe_isExistObject:(NSDictionary *)newDic stringKey:(NSString *)stringKey
 {
     SP_ASSERT_CLASS(self,NSArray);
     SP_ASSERT(self.count>0);
