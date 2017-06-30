@@ -16,6 +16,31 @@ return ([(NSString *)value func2]);\
 
 
 
+#define SP_IS_KIND_OF(obj, cls) [(obj) isKindOfClass:[cls class]]
+
+
+#if DEBUG
+
+#define SP_LOG(...) NSLog(__VA_ARGS__)
+
+#define SP_ASSERT(obj)               assert((obj)) //断言实例对象
+
+#define SP_ASSERT_CLASS(obj, cls)  SP_ASSERT((obj) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型
+
+
+#else
+
+#define SP_LOG(...)
+
+#define SP_ASSERT(obj)
+
+#define SP_ASSERT_CLASS(obj, cls)
+
+#endif
+
+
+
+
 #import "NSArray+SPSafe.h"
 
 @implementation NSArray (SPSafe)
