@@ -20,6 +20,7 @@
 
 @interface NSDictionary (SPSafe)
 
+//本类是字典安全方便的使用，方便直接转化为要使用的的对象等
 /********safe get method***/
 
 // get object

@@ -22,7 +22,9 @@
 
 @interface NSArray (SPSafe)
 
+//本类是数组安全方便的使用，方便直接转化为要使用的的对象等
 /********safe get method***/
+
 
 - (id)safe_objectAtIndex:(NSInteger)index;
 

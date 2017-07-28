@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
+#import "SPSafeData.h"
+
 @interface ViewController ()
 
 @end
@@ -17,6 +19,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+//    NSArray *arr= [[NSArray alloc] init];
+    
+//    [arr safe_stringAtIndex:0];
+    
 }
 
 - (void)didReceiveMemoryWarning {

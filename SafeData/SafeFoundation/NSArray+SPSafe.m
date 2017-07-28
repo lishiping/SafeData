@@ -371,7 +371,6 @@ return ([(NSString *)value func2]);\
     SP_ASSERT(self.count>0);
     SP_ASSERT_CLASS(newDic,NSDictionary);
     SP_ASSERT_CLASS(longKey,NSString);
-
     
     if (SP_IS_KIND_OF(self, NSArray) &&
         newDic &&
@@ -412,7 +411,6 @@ return ([(NSString *)value func2]);\
     return NO;
 }
 
-
 -(NSData*)toJSONData
 {
     SP_ASSERT_CLASS(self,NSArray);
@@ -425,7 +423,7 @@ return ([(NSString *)value func2]);\
                                             error:&err];
     if (err)
     {
-        NSLog(@"NSArraytoJsonDataError:%@",err.description);
+        SP_LOG(@"NSArraytoJsonDataError:%@",err.description);
         ret = nil;
     }
     return (ret);

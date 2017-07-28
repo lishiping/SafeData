@@ -322,7 +322,7 @@ return ([(NSString *)_ret func2]);\
                                             error:&err];
     if (err)
     {
-        NSLog(@"DictionarytoJsonDataError:%@",err.description);
+        SP_LOG(@"Dictionary to JsonData Error:%@",err);
         ret = nil;
     }
     return (ret);
