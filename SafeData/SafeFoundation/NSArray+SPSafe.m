@@ -442,7 +442,6 @@ return ([(NSString *)value func2]);\
 
     if (SP_IS_KIND_OF(self, NSMutableArray) && anObject && !SP_IS_KIND_OF(anObject, NSNull)) {
         @synchronized (self) {
-            return YES;
             @try {
                 [self addObject:anObject];
                 ret = YES;
