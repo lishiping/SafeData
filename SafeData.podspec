@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SafeData"
-  s.version      = "0.2.0"
+  s.version      = "0.2.1"
   s.summary      = "Category for NSArray,NSDictionary,NSData to Protect Data prevent the crash.检查数据类型防止插入空数据和数组越界，字典得到转换后的OC,C对象"
 
 
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.author             = { "lishiping" => "83118274@qq.com" }
 
-  s.ios.deployment_target = "6.0"
+  s.ios.deployment_target = "7.0"
 
   s.source       = { :git => "https://github.com/lishiping/SafeData.git", :tag => s.version }
 
