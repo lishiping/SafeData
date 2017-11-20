@@ -19,6 +19,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "NSDictionary+SPSafe.h"
+#import "NSData+SPSafe.h"
 
 @interface NSArray (SPSafe)
 
@@ -128,7 +129,14 @@
 
 /****get JSON  Data method***/
 
+//得到jsondata
 - (NSData *)toJSONData;
+
+//得到jsondata的编码字符串
+-(NSString *)toJSONString_NSUTF8StringEncoding;
+
+//得到jsondata的编码字符串（自定义编码）
+-(NSString *)toJSONStringWithEncoding:(NSStringEncoding)encoding;
 
 @end
 

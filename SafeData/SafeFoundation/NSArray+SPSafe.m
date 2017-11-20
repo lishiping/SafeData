@@ -15,7 +15,6 @@ return ([(NSString *)value func2]);\
 }
 
 
-
 #define SP_IS_KIND_OF(obj, cls) [(obj) isKindOfClass:[cls class]]
 
 
@@ -231,17 +230,17 @@ return ([(NSString *)value func2]);\
     SP_ASSERT_CLASS(key,NSString);
     SP_ASSERT(self.count>0);
 
-    if (SP_IS_KIND_OF(self, NSArray) && key.length > 0)
+    if (SP_IS_KIND_OF(self, NSArray) && self.count>0 && SP_IS_KIND_OF(key, NSString) && key.length>0)
     {
         NSArray *tmp = [self valueForKey:key];
         if (SP_IS_KIND_OF(tmp, NSArray) && tmp.count>0)
         {
-            NSMutableArray *arr = [NSMutableArray arrayWithCapacity:0];
-            for (id obj in tmp)
+            NSMutableArray *arr = [tmp mutableCopy];
+            for (id obj in arr)
             {
-                if (obj && !SP_IS_KIND_OF(obj, NSNull))
+                if (!obj || SP_IS_KIND_OF(obj, NSNull))
                 {
-                    [arr addObject:obj];
+                    [arr safe_removeObject:obj];
                 }
             }
             return ([arr copy]);
@@ -257,7 +256,7 @@ return ([(NSString *)value func2]);\
     SP_ASSERT(anObject);
     
     NSArray *ret = self;
-    if (SP_IS_KIND_OF(self, NSArray) && anObject && self.count>0) {
+    if (SP_IS_KIND_OF(self, NSArray) && anObject && self.count>0 && anObject) {
         NSMutableArray *temp = [ret mutableCopy];
         [temp safe_removeObject:anObject];
         ret = [temp copy];
@@ -333,7 +332,7 @@ return ([(NSString *)value func2]);\
     {
         NSMutableArray *temp = [ret mutableCopy];
         [temp safe_addObjectsFromArray:array];
-        ret = [NSArray arrayWithArray:temp];
+        ret = [temp copy];
     }
     return ret;
 }
@@ -418,15 +417,35 @@ return ([(NSString *)value func2]);\
     
     NSData *ret = nil;
     NSError *err = nil;
-    ret = [NSJSONSerialization dataWithJSONObject:self
-                                          options:0
-                                            error:&err];
+    
+    if (SP_IS_KIND_OF(self, NSArray) && self.count > 0) {
+        ret = [NSJSONSerialization dataWithJSONObject:self
+                                              options:0
+                                                error:&err];
+    }
+    
     if (err)
     {
         SP_LOG(@"NSArraytoJsonDataError:%@",err.description);
         ret = nil;
     }
     return (ret);
+}
+
+-(NSString *)toJSONString_NSUTF8StringEncoding
+{
+   return [self toJSONStringWithEncoding:NSUTF8StringEncoding];
+}
+
+-(NSString *)toJSONStringWithEncoding:(NSStringEncoding)encoding
+{
+    NSString *ret = nil;
+    NSData *jsonData = [self toJSONData];
+    
+    if (jsonData) {
+        ret = [jsonData safe_getJSONStringWithEncoding:encoding];
+    }
+    return ret;
 }
 
 @end
@@ -467,14 +486,13 @@ return ([(NSString *)value func2]);\
             @try {
                 [self addObjectsFromArray:otherArray];
                 ret = YES;
-
             } @catch (NSException *exception) {
                 SP_LOG(@"error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }
     }
+    
     return ret;
 }
 
@@ -493,7 +511,6 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }
@@ -517,8 +534,6 @@ return ([(NSString *)value func2]);\
 
             } @catch (NSException *exception) {
                 SP_LOG(@"error:%@", exception);
-                ret = NO;
-
             } @finally {
             }
         }
@@ -542,7 +557,6 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }
@@ -566,10 +580,8 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"error:%@", exception);
-                ret = NO;
             } @finally {
             }
-
         }
     }
     return ret;
@@ -746,7 +758,6 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"remove error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }
@@ -770,7 +781,6 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"remove error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }
@@ -793,7 +803,6 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"remove error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }
@@ -816,7 +825,6 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"remove error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }
@@ -839,7 +847,6 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"remove error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }
@@ -863,7 +870,6 @@ return ([(NSString *)value func2]);\
                 ret = YES;
             } @catch (NSException *exception) {
                 SP_LOG(@"remove error:%@", exception);
-                ret = NO;
             } @finally {
             }
         }

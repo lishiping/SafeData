@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SafeData"
-  s.version      = "0.1.2"
+  s.version      = "0.2.0"
   s.summary      = "Category for NSArray,NSDictionary,NSData to Protect Data prevent the crash.检查数据类型防止插入空数据和数组越界，字典得到转换后的OC,C对象"
 
 

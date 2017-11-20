@@ -27,7 +27,7 @@ return ([(NSString *)_ret func2]);\
 
 #define SP_ASSERT(obj)               assert((obj)) //断言实例对象
 
-#define SP_ASSERT_CLASS(obj, cls)  SP_ASSERT((obj) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型
+#define SP_ASSERT_CLASS(obj, cls)  SP_ASSERT((obj) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型，断言只在debug下有效，为了是开发者在debug下就发现问题
 
 
 #else
@@ -248,7 +248,7 @@ return ([(NSString *)_ret func2]);\
     SP_ASSERT_CLASS(keyPath,NSString);
     SP_ASSERT_CLASS(self,NSDictionary);
     
-    if (SP_IS_KIND_OF(keyPath, NSString) && SP_IS_KIND_OF(self, NSDictionary)) {
+    if (SP_IS_KIND_OF(keyPath, NSString)&& keyPath.length>0 && SP_IS_KIND_OF(self, NSDictionary)) {
         
         NSDictionary *dic = self;
         
@@ -258,7 +258,7 @@ return ([(NSString *)_ret func2]);\
         for (int i = 0; i<arr.count; i++) {
             NSString *str = arr[i];
             @try {
-                dic = [dic objectForKey:str];
+                dic = [dic safe_objectForKey:str];
             } @catch (NSException *exception) {
                 SP_LOG(@"safe_objectForKeyPath error:%@", exception);
             } @finally {
@@ -314,19 +314,39 @@ return ([(NSString *)_ret func2]);\
 - (nullable NSData *)toJSONData
 {
     SP_ASSERT_CLASS(self,NSDictionary);
-
+    
     NSData *ret = nil;
     NSError *err = nil;
-    ret = [NSJSONSerialization dataWithJSONObject:self
-                                          options:0
-                                            error:&err];
-    if (err)
-    {
-        SP_LOG(@"Dictionary to JsonData Error:%@",err);
-        ret = nil;
+    
+    if (SP_IS_KIND_OF(self, NSDictionary) && self.allKeys.count>0) {
+        ret = [NSJSONSerialization dataWithJSONObject:self
+                                              options:0
+                                                error:&err];
+        if (err)
+        {
+            SP_LOG(@"Dictionary to JsonData Error:%@",err);
+            ret = nil;
+        }
     }
     return (ret);
 }
+
+-(NSString *)toJSONString_NSUTF8StringEncoding
+{
+    return [self toJSONStringWithEncoding:NSUTF8StringEncoding];
+}
+
+-(NSString *)toJSONStringWithEncoding:(NSStringEncoding)encoding
+{
+    NSString *ret = nil;
+    NSData *jsonData = [self toJSONData];
+    
+    if (jsonData) {
+        ret = [jsonData safe_getJSONStringWithEncoding:encoding];
+    }
+    return ret;
+}
+
 
 @end
 
@@ -352,7 +372,8 @@ return ([(NSString *)_ret func2]);\
                 [self setObject:anObject forKey:aKey];
                 ret = YES;
             }
-            else
+            //如果anObject设置为nil代表移除该键值对
+            else if([self safe_objectForKey:aKey])
             {
                 [self removeObjectForKey:aKey];
             }
@@ -381,18 +402,75 @@ return ([(NSString *)_ret func2]);\
     }
 }
 
-- (void)safe_addEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
+- (BOOL)safe_addEntriesFromDictionary:(nullable NSDictionary *)otherDictionary
 {
     SP_ASSERT_CLASS(self,NSMutableDictionary);
     SP_ASSERT_CLASS(otherDictionary,NSDictionary);
     
+    BOOL ret = NO;
+    
     if (SP_IS_KIND_OF(self, NSMutableDictionary) && SP_IS_KIND_OF(otherDictionary, NSDictionary) && otherDictionary.allKeys.count>0) {
         @synchronized (self) {
             [self addEntriesFromDictionary:otherDictionary];
+            ret = YES;
         }
     }
+    
+    return ret;
 }
 
+- (BOOL)safe_setDictionary:(NSDictionary *)otherDictionary
+{
+    SP_ASSERT_CLASS(self,NSMutableDictionary);
+    SP_ASSERT_CLASS(otherDictionary,NSDictionary);
+    
+    BOOL ret = NO;
+
+    if (SP_IS_KIND_OF(self, NSMutableDictionary) && SP_IS_KIND_OF(otherDictionary, NSDictionary) && otherDictionary.allKeys.count>0) {
+        @synchronized (self) {
+            [self setDictionary:otherDictionary];
+            ret = YES;
+        }
+    }
+    
+    return ret;
+}
+
+
+- (BOOL)safe_removeObjectForKey:(nullable KeyType)aKey
+{
+    SP_ASSERT_CLASS(self,NSMutableDictionary);
+    SP_ASSERT(aKey);
+    
+    BOOL ret = NO;
+    
+    if(SP_IS_KIND_OF(self, NSMutableDictionary) && aKey && [self safe_objectForKey:aKey])
+    {
+        @synchronized (self) {
+            [self removeObjectForKey:aKey];
+            ret = YES;
+        }
+    }
+    
+    return ret;
+}
+
+- (BOOL)safe_removeAllObjects
+{
+    SP_ASSERT_CLASS(self,NSMutableDictionary);
+    
+    BOOL ret = NO;
+    
+    if(SP_IS_KIND_OF(self, NSMutableDictionary) && self.allKeys.count>0)
+    {
+        @synchronized (self) {
+            [self removeAllObjects];
+            ret = YES;
+        }
+    }
+    
+    return ret;
+}
 
 @end
 
