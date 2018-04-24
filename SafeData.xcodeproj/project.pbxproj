@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0412422088C2D4009EA599 /* NSObject+SPDictionarySafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0412412088C2D4009EA599 /* NSObject+SPDictionarySafe.m */; };
+		1E0412452088C44B009EA599 /* NSMutableArray+SPSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0412442088C44B009EA599 /* NSMutableArray+SPSafe.m */; };
+		1E0412492089DAD2009EA599 /* NSMutableDictionary+SPSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0412482089DAD2009EA599 /* NSMutableDictionary+SPSafe.m */; };
+		1EA752EB20826F4D005E612C /* NSObject+SPArraySafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EA752EA20826F4D005E612C /* NSObject+SPArraySafe.m */; };
 		E15C666A1E1516B4002A1516 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E15C66691E1516B4002A1516 /* main.m */; };
 		E15C666D1E1516B4002A1516 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E15C666C1E1516B4002A1516 /* AppDelegate.m */; };
 		E15C66701E1516B4002A1516 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E15C666F1E1516B4002A1516 /* ViewController.m */; };
@@ -19,6 +23,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E0412402088C2D4009EA599 /* NSObject+SPDictionarySafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+SPDictionarySafe.h"; sourceTree = "<group>"; };
+		1E0412412088C2D4009EA599 /* NSObject+SPDictionarySafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SPDictionarySafe.m"; sourceTree = "<group>"; };
+		1E0412432088C44B009EA599 /* NSMutableArray+SPSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SPSafe.h"; sourceTree = "<group>"; };
+		1E0412442088C44B009EA599 /* NSMutableArray+SPSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+SPSafe.m"; sourceTree = "<group>"; };
+		1E04124620899145009EA599 /* SPSafeDataMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPSafeDataMacro.h; sourceTree = "<group>"; };
+		1E0412472089DAD2009EA599 /* NSMutableDictionary+SPSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+SPSafe.h"; sourceTree = "<group>"; };
+		1E0412482089DAD2009EA599 /* NSMutableDictionary+SPSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+SPSafe.m"; sourceTree = "<group>"; };
+		1EA752E920826F4D005E612C /* NSObject+SPArraySafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+SPArraySafe.h"; sourceTree = "<group>"; };
+		1EA752EA20826F4D005E612C /* NSObject+SPArraySafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SPArraySafe.m"; sourceTree = "<group>"; };
 		E15C66651E1516B4002A1516 /* SafeData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E15C66691E1516B4002A1516 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E15C666B1E1516B4002A1516 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -93,13 +106,22 @@
 		E15C667F1E15174B002A1516 /* SafeFoundation */ = {
 			isa = PBXGroup;
 			children = (
+				E1F05E4E1F29FA68009B4B5B /* SPSafeData.h */,
+				1E04124620899145009EA599 /* SPSafeDataMacro.h */,
+				1EA752E920826F4D005E612C /* NSObject+SPArraySafe.h */,
+				1EA752EA20826F4D005E612C /* NSObject+SPArraySafe.m */,
 				E15C66801E15174B002A1516 /* NSArray+SPSafe.h */,
 				E15C66811E15174B002A1516 /* NSArray+SPSafe.m */,
+				1E0412432088C44B009EA599 /* NSMutableArray+SPSafe.h */,
+				1E0412442088C44B009EA599 /* NSMutableArray+SPSafe.m */,
+				1E0412402088C2D4009EA599 /* NSObject+SPDictionarySafe.h */,
+				1E0412412088C2D4009EA599 /* NSObject+SPDictionarySafe.m */,
 				E15C66821E15174B002A1516 /* NSDictionary+SPSafe.h */,
 				E15C66831E15174B002A1516 /* NSDictionary+SPSafe.m */,
+				1E0412472089DAD2009EA599 /* NSMutableDictionary+SPSafe.h */,
+				1E0412482089DAD2009EA599 /* NSMutableDictionary+SPSafe.m */,
 				E1F05E4F1F29FAF0009B4B5B /* NSData+SPSafe.h */,
 				E1F05E501F29FAF0009B4B5B /* NSData+SPSafe.m */,
-				E1F05E4E1F29FA68009B4B5B /* SPSafeData.h */,
 			);
 			path = SafeFoundation;
 			sourceTree = "<group>";
@@ -175,9 +197,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E15C66701E1516B4002A1516 /* ViewController.m in Sources */,
+				1E0412422088C2D4009EA599 /* NSObject+SPDictionarySafe.m in Sources */,
 				E15C666D1E1516B4002A1516 /* AppDelegate.m in Sources */,
+				1E0412452088C44B009EA599 /* NSMutableArray+SPSafe.m in Sources */,
 				E15C666A1E1516B4002A1516 /* main.m in Sources */,
+				1E0412492089DAD2009EA599 /* NSMutableDictionary+SPSafe.m in Sources */,
 				E15C66851E15174B002A1516 /* NSDictionary+SPSafe.m in Sources */,
+				1EA752EB20826F4D005E612C /* NSObject+SPArraySafe.m in Sources */,
 				E1F05E511F29FAF0009B4B5B /* NSData+SPSafe.m in Sources */,
 				E15C66841E15174B002A1516 /* NSArray+SPSafe.m in Sources */,
 			);

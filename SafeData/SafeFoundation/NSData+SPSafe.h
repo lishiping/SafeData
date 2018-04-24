@@ -17,6 +17,7 @@
 //github address//https://github.com/lishiping/SPBaseClass
 
 #import <Foundation/Foundation.h>
+#import "SPSafeDataMacro.h"
 
 @interface NSData (SPSafe)
 

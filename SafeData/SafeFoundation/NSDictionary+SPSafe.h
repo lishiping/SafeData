@@ -17,7 +17,7 @@
 //github address//https://github.com/lishiping/SPBaseClass
 
 #import <Foundation/Foundation.h>
-#import "NSData+SPSafe.h"
+
 
 @interface NSDictionary (SPSafe)
 
@@ -96,38 +96,13 @@
 /****get JSON  Data method***/
 
 //得到jsondata
-- (nullable NSData *)toJSONData;
+- (nullable NSData *)safe_toJSONData;
 
 //得到jsondata的编码字符串
--(NSString *_Nullable)toJSONString_NSUTF8StringEncoding;
+-(NSString *_Nullable)safe_toJSONString_NSUTF8StringEncoding;
 
 //得到jsondata的编码字符串（自定义编码）
--(NSString *_Nullable)toJSONStringWithEncoding:(NSStringEncoding)encoding;
+-(NSString *_Nullable)safe_toJSONStringWithEncoding:(NSStringEncoding)encoding;
 
 @end
 
-
-
-#pragma mark - NSMutableDictionary + Safe
-
-@interface NSMutableDictionary<KeyType, ObjectType> (SPSafe)
-
-/********safe set method***/
-//safe set object
-- (BOOL)safe_setObject:(nullable ObjectType)anObject forKey:(nullable KeyType)aKey;
-
-// safe set string
-- (BOOL)safe_setString:(nullable NSString *)anObject forKey:(nullable KeyType)aKey;
-
-- (BOOL)safe_addEntriesFromDictionary:(nullable NSDictionary *)otherDictionary;
-
-- (BOOL)safe_setDictionary:(NSDictionary<KeyType, ObjectType> *_Nonnull)otherDictionary;
-
-/********safe remove method***/
-
-- (BOOL)safe_removeObjectForKey:(nullable KeyType)aKey;
-
-- (BOOL)safe_removeAllObjects;
-
-
-@end

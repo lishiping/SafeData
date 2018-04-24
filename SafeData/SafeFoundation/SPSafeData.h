@@ -22,7 +22,7 @@
 
 #endif /* SPSafeData_h */
 
-#import "NSArray+SPSafe.h"
-#import "NSDictionary+SPSafe.h"
+#import "NSObject+SPArraySafe.h"
+#import "NSObject+SPDictionarySafe.h"
 #import "NSData+SPSafe.h"
 

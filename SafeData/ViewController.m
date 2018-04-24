@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 #import "SPSafeData.h"
+#import "NSObject+SPArraySafe.h"
 
 @interface ViewController ()
 
@@ -20,10 +21,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-//    NSArray *arr= [[NSArray alloc] init];
+    NSArray *arr= [[NSArray alloc] init];
     
-//    [arr safe_stringAtIndex:0];
+//   arr =  [arr sp_arrayAddObject:@"wo"];
     
+    
+    
+    NSLog(@"%@",SP_IS_KIND_OF(arr, NSMutableArray)?@"y":@"N");
 }
 
 - (void)didReceiveMemoryWarning {
