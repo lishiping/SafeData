@@ -228,7 +228,7 @@
 {
     SP_ASSERT_CLASS(aKey,NSString);
     
-    NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableArray)?self:[self mutableCopy];
+    NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableDictionary)?self:[self mutableCopy];
     [mDict safe_setObject:anObject forKey:aKey];
     return ([mDict copy]);
 }
@@ -238,7 +238,7 @@
     SP_ASSERT_CLASS(otherDictionary,NSDictionary);
     
     if (SP_IS_KIND_OF(otherDictionary, NSDictionary)&&otherDictionary.count>0) {
-        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableArray)?self:[self mutableCopy];
+        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableDictionary)?self:[self mutableCopy];
         [mDict safe_addEntriesFromDictionary:otherDictionary];
         return ([mDict copy]);
     }

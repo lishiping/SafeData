@@ -172,7 +172,6 @@
     return (NO);
 }
 
-// add anObject
 - (nullable NSDictionary *)sp_dictionarySetObject:(id)anObject forKey:(id)aKey
 {
     SP_ASSERT_CLASS(self,NSDictionary);
@@ -180,7 +179,7 @@
 
     if (SP_IS_KIND_OF(self, NSDictionary))
     {
-        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableArray)?self:[self mutableCopy];
+        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableDictionary)?self:[self mutableCopy];
         [mDict safe_setObject:anObject forKey:aKey];
         return mDict;
     }
@@ -195,7 +194,7 @@
 
     if (SP_IS_KIND_OF(self, NSDictionary))
     {
-        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableArray)?self:[self mutableCopy];
+        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableDictionary)?self:[self mutableCopy];
         [mDict safe_addEntriesFromDictionary:otherDictionary];
         return mDict;
     }
@@ -210,7 +209,7 @@
     
     if (SP_IS_KIND_OF(self, NSDictionary))
     {
-        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableArray)?self:[self mutableCopy];
+        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableDictionary)?self:[self mutableCopy];
         [mDict safe_setDictionary:otherDictionary];
         return mDict;
     }
@@ -225,7 +224,7 @@
     
     if (SP_IS_KIND_OF(self, NSDictionary))
     {
-        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableArray)?self:[self mutableCopy];
+        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableDictionary)?self:[self mutableCopy];
         [mDict safe_removeObjectForKey:aKey];
         return mDict;
     }
@@ -239,7 +238,7 @@
     
     if (SP_IS_KIND_OF(self, NSDictionary))
     {
-        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableArray)?self:[self mutableCopy];
+        NSMutableDictionary *mDict = SP_IS_KIND_OF(self, NSMutableDictionary)?self:[self mutableCopy];
         [mDict safe_removeAllObjects];
         return mDict;
     }
@@ -254,7 +253,7 @@
 
     if (SP_IS_KIND_OF(self, NSDictionary)&&SP_IS_KIND_OF(keyPath, NSString) && keyPath.length>0)
     {
-        [(NSDictionary*)self safe_stringForKeyPath:keyPath];
+       return [(NSDictionary*)self safe_stringForKeyPath:keyPath];
     }
    
     return nil;
@@ -267,7 +266,7 @@
 
     if (SP_IS_KIND_OF(self, NSDictionary)&&SP_IS_KIND_OF(keyPath, NSString) && keyPath.length>0)
     {
-        [(NSDictionary*)self safe_objectForKeyPath:keyPath];
+      return [(NSDictionary*)self safe_objectForKeyPath:keyPath];
     }
     
     return nil;
