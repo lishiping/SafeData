@@ -72,6 +72,8 @@
 
 /********change method***/
 
+- (NSArray*)sp_subarrayWithRange:(NSRange)range;
+
 - (NSArray*)sp_arrayInsertObject:(id)anObject atIndex:(NSUInteger)index;
 
 - (NSArray*)sp_arrayInsertObjects:(NSArray *)objects atIndexes:(NSIndexSet *)indexes;

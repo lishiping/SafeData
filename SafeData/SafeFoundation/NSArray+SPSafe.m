@@ -266,6 +266,14 @@
     return nil;
 }
 
+-(NSArray*)safe_subarrayWithRange:(NSRange)range
+{
+    NSUInteger num = range.location+range.length;
+    if (self.count>=num) {
+        return [self subarrayWithRange:range];
+    }
+    return self;
+}
 -(NSArray*)safe_arrayByAddObject:(id)anObject
 {
     SP_ASSERT(anObject);

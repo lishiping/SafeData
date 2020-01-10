@@ -306,6 +306,17 @@
     return nil;
 }
 
+- (NSArray*)sp_subarrayWithRange:(NSRange)range
+{
+    SP_ASSERT_CLASS(self,NSArray);
+    
+    if (SP_IS_KIND_OF(self, NSArray))
+    {
+        return [(NSArray*)self safe_subarrayWithRange:range];
+    }
+    return nil;
+}
+
 - (NSArray*)sp_arrayInsertObject:(id)anObject atIndex:(NSUInteger)index
 {
     SP_ASSERT_CLASS(self,NSArray);

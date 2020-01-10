@@ -70,6 +70,8 @@
 
 - (NSArray*)safe_arrayByRemoveNullObjects;
 
+- (NSArray*)safe_subarrayWithRange:(NSRange)range;
+
 /****fast safe add method***/
 
 - (NSArray*)safe_arrayByAddObject:(id)anObject;
