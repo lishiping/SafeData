@@ -28,6 +28,7 @@
             else if([self safe_objectForKey:aKey])
             {
                 [self removeObjectForKey:aKey];
+                return YES;
             }
         }
     }

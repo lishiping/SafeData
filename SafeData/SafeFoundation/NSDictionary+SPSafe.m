@@ -16,8 +16,9 @@
 {
     //为什么要每个里面都加断言呢，原因是如果只在上一个safe_objectForKey里面加断言不能马上知道到底是哪个方法调用的，在每个里面加断言可以离开知道是调用的哪个方法
     SP_ASSERT(key);
-    
-    if (key)
+    SP_ASSERT(self.allKeys.count>0);
+
+    if (self.allKeys.count>0 && key)
     {
         return [self objectForKey:key];
     }
@@ -265,7 +266,7 @@
     return (ret);
 }
 
--(NSString *)safe_toJSONString_NSUTF8StringEncoding
+-(NSString *)safe_toJSONString_UTF8
 {
     return [self safe_toJSONStringWithEncoding:NSUTF8StringEncoding];
 }

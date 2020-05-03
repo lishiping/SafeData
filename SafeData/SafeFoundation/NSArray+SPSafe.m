@@ -29,14 +29,11 @@
 
 - (NSString*)safe_stringAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     if (SP_IS_KIND_OF(obj, NSString))
     {
         return obj;
-    }else if (SP_IS_KIND_OF(obj, NSString))
+    }else if (SP_IS_KIND_OF(obj, NSNumber))
     {
         return [(NSNumber *)obj stringValue];
     }
@@ -46,9 +43,6 @@
 
 - (NSDictionary*)safe_dictionaryAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     if (SP_IS_KIND_OF(obj, NSDictionary)) {
         return (obj);
@@ -58,9 +52,6 @@
 
 - (NSArray*)safe_arrayAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     if (SP_IS_KIND_OF(obj, NSArray)) {
         return (obj);
@@ -70,9 +61,6 @@
 
 - (UIImage*)safe_imageAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     if (SP_IS_KIND_OF(obj, UIImage)) {
         return (obj);
@@ -82,9 +70,6 @@
 
 - (NSData*)safe_dataAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     if (SP_IS_KIND_OF(obj, NSData)) {
         return (obj);
@@ -94,9 +79,6 @@
 
 - (NSInteger)safe_integerAtIndex:(NSUInteger)index;
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     SP_SAFE_VALUE(obj, integerValue, integerValue);
     
@@ -105,9 +87,6 @@
 
 -(int)safe_intAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     
     SP_SAFE_VALUE(obj, intValue, intValue);
@@ -117,9 +96,6 @@
 
 -(long)safe_longAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     
     SP_SAFE_VALUE(obj, longValue, integerValue);
@@ -129,9 +105,6 @@
 
 -(long long)safe_longlongAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     
     SP_SAFE_VALUE(obj, longLongValue, longLongValue);
@@ -141,9 +114,6 @@
 
 -(double)safe_doubleAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     
     SP_SAFE_VALUE(obj, doubleValue, doubleValue);
@@ -153,9 +123,6 @@
 
 -(float)safe_floatAtIndex:(NSUInteger)index
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
     id obj = [self safe_objectAtIndex:index];
     
     SP_SAFE_VALUE(obj, floatValue, floatValue);
@@ -165,24 +132,12 @@
 
 - (id)safe_getFirstObject
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
-    if (self.count>0) {
-        return [self safe_objectAtIndex:0];
-    }
-    return nil;
+    return [self safe_objectAtIndex:0];
 }
 
 - (id)safe_getLastObject
 {
-    SP_ASSERT(index>=0);
-    SP_ASSERT(self.count>0);
-    
-    if (self.count>0) {
-        return [self safe_objectAtIndex:self.count-1];
-    }
-    return nil;
+    return [self safe_objectAtIndex:self.count-1];
 }
 
 - (NSUInteger)safe_getIndexByObject:(id)object
@@ -211,9 +166,10 @@
 
 - (NSArray*)safe_arrayByRemoveAtIndex:(NSInteger)index
 {
+    SP_ASSERT(index>0);
     SP_ASSERT(self.count>0);
 
-    if (self.count>0 &&index>=0 &&index<self.count)
+    if (self.count>0 && index>=0 && index<self.count)
     {
         NSMutableArray *temp = SP_IS_KIND_OF(self, NSMutableArray)?self:[self mutableCopy];
         [temp safe_removeObjectAtIndex:index];
@@ -269,7 +225,7 @@
 -(NSArray*)safe_subarrayWithRange:(NSRange)range
 {
     NSUInteger num = range.location+range.length;
-    if (self.count>=num) {
+    if (self.count>=num && num>=0) {
         return [self subarrayWithRange:range];
     }
     return self;
@@ -371,7 +327,7 @@
     return (ret);
 }
 
--(NSString *)safe_toJSONString_NSUTF8StringEncoding
+-(NSString *)safe_toJSONString_UTF8
 {
     return [self safe_toJSONStringWithEncoding:NSUTF8StringEncoding];
 }

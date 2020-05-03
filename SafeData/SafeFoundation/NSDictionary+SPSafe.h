@@ -99,7 +99,7 @@
 - (nullable NSData *)safe_toJSONData;
 
 //得到jsondata的编码字符串
--(NSString *_Nullable)safe_toJSONString_NSUTF8StringEncoding;
+-(NSString *_Nullable)safe_toJSONString_UTF8;
 
 //得到jsondata的编码字符串（自定义编码）
 -(NSString *_Nullable)safe_toJSONStringWithEncoding:(NSStringEncoding)encoding;

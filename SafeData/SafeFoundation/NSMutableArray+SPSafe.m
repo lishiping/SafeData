@@ -36,7 +36,7 @@
 {
     SP_ASSERT_CLASS(otherArray,NSArray);
     
-    if (SP_IS_KIND_OF(otherArray, NSArray) && (otherArray.count > 0))
+    if (SP_IS_KIND_OF(otherArray, NSArray) && otherArray.count>0)
     {
         @synchronized (self) {
             @try {
@@ -161,7 +161,7 @@
     SP_ASSERT(self.count>0);
     SP_ASSERT(index>=0);
     
-    if (index < self.count &&index>=0)
+    if (self.count>0 && index < self.count && index>=0)
     {
         @synchronized (self)
         {
@@ -224,7 +224,8 @@
 {
     SP_ASSERT_CLASS(otherArray,NSArray);
     SP_ASSERT(self.count>0);
-    
+    SP_ASSERT(otherArray.count>0);
+
     if (self.count>0 && SP_IS_KIND_OF(otherArray, NSArray) && otherArray.count>0)
     {
         @synchronized (self)
